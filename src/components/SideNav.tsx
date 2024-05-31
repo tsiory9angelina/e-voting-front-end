@@ -82,7 +82,8 @@ function SideNav() {
           <Box
             component="img"
             sx={styles.appLogo}
-            src="/src/assets/logo-removebg2.png"
+            //src="/src/assets/logo-removebg2.png"
+            src="https://storage.cloud.google.com/evote-bucket-blockchain/assets/logo-removebg2.png"
           />
       
         <MenuItem
