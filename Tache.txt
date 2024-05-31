@@ -1,0 +1,21 @@
+-Candidat : 
+    CReate
+    REad
+    Delete
+    Update
+-Bureau de vote : 
+    CReate
+    REad
+    Delete
+    Update
+-Electeur :
+    CReate => OK
+    REad
+    Delete
+    Update
+-Statistiques
+-GraphQL
+
+-UML
+
+    

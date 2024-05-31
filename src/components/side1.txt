@@ -1,0 +1,192 @@
+import { Box, Typography, Switch } from "@mui/material";
+import HowToVoteTwoToneIcon from "@mui/icons-material/HowToVoteTwoTone";
+import RoofingTwoToneIcon from "@mui/icons-material/RoofingTwoTone";
+//import PortraitTwoToneIcon from "@mui/icons-material/PortraitTwoTone";
+import HowToRegTwoToneIcon from "@mui/icons-material/HowToRegTwoTone";
+import NoteAddTwoToneIcon from "@mui/icons-material/NoteAddTwoTone";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
+import "./SideNav.css";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SideNav = ({ darkMode, setDarkMode }: any) => {
+  const [activeItem, setActiveItem] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleItemClick = (path:any) => {
+    setActiveItem(path); // Mettre à jour l'élément actif lors du clic
+  };
+  // Gérer le changement de mode sombre/clair
+  const handleModeChange = () => {
+    console.log("handleModeChange called");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setDarkMode((prevDarkMode: any) => !prevDarkMode);
+  };
+
+  return (
+    <>
+      <Sidebar
+        style={{
+          //   position: "fixed",
+          top: 0,
+          left: 0,
+          height: "100vh",
+          width: "250px",
+          padding: "10px 14px",
+          backgroundColor: darkMode ? "#242526" : "#fbfbfb",
+          // backgroundColor: darkMode ? "#242526" : "#fbfbfb",
+          color: darkMode ? "#ccc" : "#707070",
+          zIndex: 100,
+          transition: "background-color 0.3s, color 0.3s",
+        }}
+        breakPoint="md"
+
+        //backgroundColor={theme.palette.secondary.light}
+      >
+        <Menu
+           menuItemStyles={{
+            button: ({ active }) => {
+              return {
+                boxShadow: active
+                  ? "0px 4px 8px -4px rgba(58, 53, 65, 0.42)"
+                  : undefined,
+                backgroundImage: active
+                  ? "linear-gradient(98deg, #89B77C, #0a713f 94%)"
+                  : undefined,
+                backgroundColor: active
+                  ? "#000"
+                  : undefined,
+                borderRadius: "6px", // Coins arrondis à droite
+                marginBottom: "10px",
+                transition:
+                  "background-color 0.3s, color 0.3s, box-shadow 0.3s, background-image 0.3s",
+                color: active ? "white" : undefined,
+                "&:hover": {
+                          backgroundImage: active
+                            ? "#d35f2e"
+                            : "linear-gradient(98deg, #89B77C, #0a713f 94%)",
+                          color: "#fff",
+                          "& svg": {
+                            color: "#fff",
+                          },
+                        },
+              };
+            },
+            icon: ({ active }) => {
+              return {
+                color: active ? "white" : undefined, // Icônes en blanc lorsque actif
+              };
+            },
+          //   button: ({ active }) => {
+          //     return {
+          //       borderRadius: "6px",
+          //       marginBottom: "10px",
+          //       backgroundColor: darkMode ? "#242526" : "#fff",
+          //       color: darkMode ? "#ccc" : "#707070",
+          //       boxShadow: active
+          //         ? "none"
+          //         : darkMode
+          //         ? "none"
+          //         : "0px 4px 8px -4px rgba(58, 53, 65, 0.42)",
+          //       backgroundImage:"none",
+          //       transition:
+          //         "background-color 0.3s, color 0.3s, box-shadow 0.3s, background-image 0.3s",
+          //       "&:hover": {
+          //         backgroundImage: active
+          //           ? "none"
+          //           : "linear-gradient(98deg, #89B77C, #0a713f 94%)",
+          //         color: "#fff",
+          //         "& svg": {
+          //           color: "#fff",
+          //         },
+          //       },
+          //       ...(active && {
+          //         backgroundImage: "linear-gradient(98deg, #89B77C, #0a713f 94%)",
+          //         color: "#fff",
+          //         "& svg": {
+          //           color: "#fff", 
+          //         },
+          //       }),
+          //     };
+          //   },
+          //   icon: ({ active }) => {
+          //     return {
+          //       color: active ? "#fff" : darkMode ? "#ccc" : "#707070",// Icônes en blanc lorsque actif
+          //     };
+          //   },
+           }}
+        >
+          <MenuItem
+            //className={`menu-item ${darkMode ? "menu-item-dark" : ""}`}
+            onClick={() => handleItemClick("/dashboard")}
+            active={location.pathname === "/dashboard"}
+            component={<Link to="/dashboard" />}
+            icon={<HowToVoteTwoToneIcon />}
+          >
+            <Typography variant="body2">Dashboard</Typography>
+          </MenuItem>
+
+          <MenuItem
+          onClick={() => handleItemClick("/dashboard/candidate")}
+            // className={darkMode ? "menu-item-hover" : ""}
+            active={
+              location.pathname === "/dashboard/candidate" ||
+              location.pathname === "/dashboard/candidate/create"
+            }
+            component={<Link to="/dashboard/candidate" />}
+            icon={<NoteAddTwoToneIcon />}
+          >
+            <Typography variant="body2">Candidats</Typography>
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => handleItemClick("/dashboard/station")}
+            active={
+              location.pathname === "/dashboard/station" ||
+              location.pathname === "/dashboard/station/create"
+            }
+            component={<Link to="/dashboard/station" />}
+            icon={<RoofingTwoToneIcon />}
+          >
+            <Typography variant="body2">Bureau de vote</Typography>
+          </MenuItem>
+          <MenuItem
+           onClick={() => handleItemClick("/dashboard/voter")}
+            active={
+              location.pathname === "/dashboard/voter" ||
+              location.pathname === "/dashboard/voter/create"
+            }
+            component={<Link to="/dashboard/voter" />}
+            icon={<HowToRegTwoToneIcon />}
+          >
+            <Typography variant="body2">Electeur</Typography>
+          </MenuItem>
+        </Menu>
+        <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ borderTop: 1, borderColor: "divider", p: 2 }}>
+          <Typography
+            variant="body2"
+            color="inherit"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            Dark Mode
+            <Switch
+              checked={darkMode}
+              onChange={handleModeChange}
+              icon={<Brightness7Icon />}
+              checkedIcon={<Brightness4Icon />}
+            />
+          </Typography>
+        </Box>
+
+      </Sidebar>
+    </>
+  );
+};
+export default SideNav;

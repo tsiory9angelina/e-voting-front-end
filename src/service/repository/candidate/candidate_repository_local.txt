@@ -1,0 +1,35 @@
+import axios from "axios";
+import Config from "../../../config/configs/config";
+import CandidateDTO from "../../../data/dto/candidate.dto";
+
+const baseUrl:string = Config.BASE_URL ;
+
+
+const createCandidate = (candidate: CandidateDTO) => {
+    const create_candidate = axios.post(`${baseUrl}/api/candidate/`, candidate);
+    return create_candidate;
+  }
+  
+  const getCandidates = () => {
+    console.log("eto====================================")
+    return axios.get(baseUrl + '/api/candidate/candidates');
+  }
+  const getCandidateById = (id: string) => {
+    return axios.get(baseUrl + '/api/candidate/get/'+id);
+  }
+  const deleteCandidateById = (id: string) => {
+    return axios.delete(baseUrl + "/api/candidate/delete/" + id);
+  }
+  const updateCandidateById = (id: string, candidate:CandidateDTO) => {
+    return axios.put(baseUrl + "/api/candidate/update/" + id, candidate);
+  }
+
+  export const CandidateRepository = {
+    createCandidate, 
+    getCandidates,
+    deleteCandidateById,
+    updateCandidateById, 
+    getCandidateById
+  }
+  
+  

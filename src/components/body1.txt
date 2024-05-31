@@ -1,0 +1,101 @@
+import { Outlet } from "react-router-dom";
+
+import SideNav from "../components/SideNav";
+import AppHeader from "../components/AppHeader";
+import { ProSidebarProvider } from "react-pro-sidebar";
+import { Box, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { useState } from "react";
+
+const Body = () => {
+  const [darkMode, setDarkMode] = useState(false);
+  
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      primary: {
+        main: "#556cd6", // Couleur principale pour le mode clair
+        ...(darkMode && {
+          main: "#90caf9", // Couleur principale pour le mode sombre
+        }),
+      },
+      secondary: {
+        main: "#19857b", // Couleur secondaire pour le mode clair
+        ...(darkMode && {
+          main: "#80cbc4", // Couleur secondaire pour le mode sombre
+        }),
+      },
+      background: {
+        default: darkMode ? "#121212" : "#e4e9f7", // Couleur de fond par défaut
+        paper: darkMode ? "#424242" : "#fff", // Couleur de fond des composants 'paper'
+      },
+      text: {
+        primary: darkMode ? "#fff" : "#000", // Couleur principale du texte
+        secondary: darkMode ? "#e0e0e0" : "#000", // Couleur secondaire du texte
+      },
+    },
+    typography: {
+      fontFamily: ["Roboto", '"Helvetica Neue"', "Arial", "sans-serif"].join(
+        ","
+      ),
+      h5: {
+        fontWeight: 600,
+        color: darkMode ? "#fff" : "#000", // Style pour les variantes de titre h5
+      },
+      // ... autres styles de typographie
+    },
+    // ... autres personnalisations de thème
+  });
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+      <ProSidebarProvider>
+        <CssBaseline />
+        <Box sx={{ display: "flex", height: "100vh" }}>
+          <SideNav darkMode={darkMode} setDarkMode={setDarkMode} />
+          <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+            <AppHeader />
+            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+              <Outlet />
+            </Box>
+          </Box>
+        </Box>
+        </ProSidebarProvider>
+      </ThemeProvider>
+
+      {/* <ThemeProvider theme={theme}>
+        <ProSidebarProvider>
+          <CssBaseline />
+          <AppHeader />
+          <Box sx={styles.container}>
+            <SideNav />
+            <Box component={"main"} className="home" sx={styles.mainSection}>
+              <Outlet />
+            </Box>
+          </Box>
+        </ProSidebarProvider>
+      </ThemeProvider> */}
+    </>
+  );
+};
+
+/** @type {import("@mui/material").SxProps} */
+// const styles = {
+//   container: {
+//     display: "flex",
+//     bgcolor: "neutral.grey",
+//     height: "calc(100% - 64px)",
+//   },
+//   sidebar: {
+//     display: "flex",
+//     bgcolor: "dark",
+//     // height: "calc(100% - 64px)",
+//   },
+//   mainSection: {
+//     p: 4,
+//     width: "100%",
+//     height: "100%",
+//     overflow: "auto",
+//   },
+// };
+
+export default Body;

@@ -1,0 +1,20 @@
+/* SideNav.css */
+.menu-item {
+border-radius: 6px;
+margin-bottom: 10px;
+background-color: #fff;
+color: #707070;
+box-shadow: 0px 4px 8px -4px rgba(58, 53, 65, 0.42);
+transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+background-image: linear-gradient(98deg, #89B77C, #0a713f 94%);
+color: #fff;
+}
+
+.menu-item:hover svg,
+.menu-item.active svg {
+color: #fff;
+}

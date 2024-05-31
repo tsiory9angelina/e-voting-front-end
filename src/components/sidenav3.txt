@@ -1,0 +1,106 @@
+import React from "react";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Switch,
+} from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home"; // Importez les icônes MUI correspondantes
+import AnalyticsIcon from "@mui/icons-material/Analytics";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SideNav = ({ darkMode, setDarkMode }: any) => {
+  // Gérer le changement de mode sombre/clair
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleModeChange = (event : any) => {
+    setDarkMode(event.target.checked);
+  };
+
+  return (
+    <Box
+      sx={{
+        width: "250px",
+        height: "100vh",
+        bgcolor: "primary.main",
+        color: "white",
+      }}
+    >
+      <Box sx={{ px: 2, py: 3, bgcolor: "background.paper" }}>
+        <Typography variant="h6" color="inherit">
+          CodingLab
+        </Typography>
+        <Typography variant="caption" display="block" color="inherit">
+          Web developer
+        </Typography>
+      </Box>
+      <List component="nav">
+        <ListItem button>
+          <ListItemIcon>
+            <HomeIcon color="inherit" />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <AnalyticsIcon color="inherit" />
+          </ListItemIcon>
+          <ListItemText primary="Analytics" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <NotificationsIcon color="inherit" />
+          </ListItemIcon>
+          <ListItemText primary="Notifications" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <FavoriteIcon color="inherit" />
+          </ListItemIcon>
+          <ListItemText primary="Likes" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <AccountBalanceWalletIcon color="inherit" />
+          </ListItemIcon>
+          <ListItemText primary="Wallets" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <ExitToAppIcon color="inherit" />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
+      </List>
+      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ borderTop: 1, borderColor: "divider", p: 2 }}>
+        <Typography
+          variant="body2"
+          color="inherit"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          Dark Mode
+          <Switch
+            checked={darkMode}
+            onChange={handleModeChange}
+            icon={<Brightness7Icon />}
+            checkedIcon={<Brightness4Icon />}
+          />
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+export default SideNav;

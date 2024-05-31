@@ -1,0 +1,131 @@
+import React from "react";
+import {
+  Box,
+  Typography,
+  Switch,
+} from "@mui/material";
+import HowToVoteTwoToneIcon from "@mui/icons-material/HowToVoteTwoTone";
+import RoofingTwoToneIcon from "@mui/icons-material/RoofingTwoTone";
+//import PortraitTwoToneIcon from "@mui/icons-material/PortraitTwoTone";
+import HowToRegTwoToneIcon from "@mui/icons-material/HowToRegTwoTone";
+import NoteAddTwoToneIcon from "@mui/icons-material/NoteAddTwoTone";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
+import theme from "../config/theme";
+import { Link } from "react-router-dom";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SideNav = ({ darkMode, setDarkMode }: any) => {
+  // Gérer le changement de mode sombre/clair
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleModeChange = (event : any) => {
+    setDarkMode(event.target.checked);
+  };
+
+  return (
+    <>
+    <Sidebar
+      //style={{ height: "100%", top: "auto", borderColor: "#c1c1c6" }}
+      style={{
+        height: "100%",
+        top: "auto",
+        boxShadow: "1px 1px 0px 1px rgba(0, 0, 0, 0.25)",
+        background: "green",
+        color:"#1e4620",
+      }}
+      breakPoint="md"
+      
+      
+      //backgroundColor={theme.palette.secondary.light}
+    >
+      <Menu
+        menuItemStyles={{
+          button: ({ active }) => {
+            return {
+              boxShadow: active
+                ? "0px 4px 8px -4px rgba(58, 53, 65, 0.42)"
+                : undefined,
+              backgroundImage: active
+                ? "linear-gradient(98deg, #89B77C, #0a713f 94%)"
+                : undefined,
+              backgroundColor: active
+                ? theme.palette.secondary.dark
+                : undefined,
+              borderRadius: "10px 10px 10px 10px", // Coins arrondis à droite
+              color: active ? "white" : undefined,
+            };
+          },
+          icon: ({ active }) => {
+            return {
+              color: active ? "white" : undefined, // Icônes en blanc lorsque actif
+            };
+          },
+        }}
+      >
+        <MenuItem
+          active={location.pathname === "/dashboard"}
+          component={<Link to="/dashboard" />}
+          icon={<HowToVoteTwoToneIcon />}
+        >
+          <Typography variant="body2">Dashboard</Typography>
+        </MenuItem>
+     
+        <MenuItem
+          active={
+            location.pathname === "/dashboard/candidate" ||
+            location.pathname === "/dashboard/candidate/create"
+          }
+          component={<Link to="/dashboard/candidate" />}
+          icon={<NoteAddTwoToneIcon />}
+        >
+          <Typography variant="body2">Candidats</Typography>
+        </MenuItem>
+        {/* </SubMenu> */}
+        <MenuItem
+          active={location.pathname === "/dashboard/station" ||
+          location.pathname === "/dashboard/station/create"
+        }
+          component={<Link to="/dashboard/station" />}
+          icon={<RoofingTwoToneIcon />}
+        >
+          <Typography variant="body2">Bureau de vote</Typography>
+        </MenuItem>
+        <MenuItem
+          active={location.pathname === "/dashboard/voter" || location.pathname==="/dashboard/voter/create"}
+          component={<Link to="/dashboard/voter" />}
+          icon={<HowToRegTwoToneIcon />}
+        >
+          <Typography variant="body2">Electeur</Typography>
+        </MenuItem>
+      </Menu>
+
+      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ borderTop: 1, borderColor: "divider", p: 2 }}>
+        <Typography
+          variant="body2"
+          color="inherit"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          Dark Mode
+          <Switch
+            checked={darkMode}
+            onChange={handleModeChange}
+            icon={<Brightness7Icon />}
+            checkedIcon={<Brightness4Icon />}
+          />
+        </Typography>
+      </Box>
+    </Sidebar>
+    </>
+    
+      
+    
+  
+  );
+};
+export default SideNav;

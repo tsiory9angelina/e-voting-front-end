@@ -1,0 +1,174 @@
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { StationApplicatif } from "../../service/applicatif/station/station.applicatif";
+
+import { useEffect, useState } from "react";
+import StationDTO from "../../data/dto/station.dto";
+import * as XLSX from "xlsx";
+
+const StationCreate = () => {
+  const navigate = useNavigate();
+
+  const [nameStation, setNameStation] = useState("");
+  const [addressStation, setAddressStation] = useState("");
+  const [token, setToken] = useState("");
+
+  const createStation = () => {
+    const station: StationDTO = {
+      name: nameStation,
+      address: addressStation,
+    };
+    console.log(station);
+    StationApplicatif.createStation(station, token)
+      .then((res) => {
+        console.log(res);
+        console.log("Bureau de vote ajouté avec succès");
+        navigate("/dashboard/station");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
+  const checkToken = () => {
+    let tokenUser = localStorage.getItem("token");
+    if (tokenUser) {
+      if (tokenUser.startsWith('"') && tokenUser.endsWith('"')) {
+        // Enlever les guillemets doubles en utilisant replace avec une expression régulière
+        tokenUser = tokenUser.replace(/^"(.*)"$/, "$1");
+        setToken(tokenUser.replace(/^"(.*)"$/, "$1"));
+      } else {
+        setToken(tokenUser);
+      }
+    }
+  };
+
+  const importDocument = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: "binary" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+          header: 1,
+        }) as any[][];
+
+        // Supprimer la première ligne si elle contient les titres des colonnes
+        jsonData.shift();
+
+        // Transformer les données en utilisant des clés définies
+        const formattedData = jsonData.map((row: any[]) => ({
+          region: row[1] || "",
+          district: row[2] || "",
+          commune: row[3] || "",
+          fokontany: row[4] || "",
+          centreDeVote: row[5] || "",
+          codeBV: row[6] || "",
+          bureauDeVote: row[7] || "",
+          nombreDElecteurs: row[8] || 0,
+        }));
+
+        console.log(formattedData);
+        formattedData.forEach((data) => {
+          console.log(data.region +" - "+data.fokontany);
+          });
+          
+        // Envoyer formattedData à votre serveur via Axios...
+      };
+      reader.readAsBinaryString(file);
+    } else {
+      console.error("Aucun fichier sélectionné");
+    }
+  };
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  return (
+    <>
+      <Container
+        style={{
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          background: "#ffffff",
+          borderRadius: "10px",
+          padding: "20px", // Ajout de padding au besoin
+          // position: "relative", // Ajout de position relative
+          maxWidth: "95%",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Bureau de vote
+          </Typography>
+          <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  id="nom"
+                  fullWidth
+                  required
+                  label="Nom du bureau de vote"
+                  name="nom"
+                  variant="filled"
+                  value={nameStation}
+                  onChange={(e) => {
+                    setNameStation(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  id="adresse"
+                  fullWidth
+                  required
+                  label="Adresse"
+                  variant="filled"
+                  value={addressStation}
+                  onChange={(e) => {
+                    setAddressStation(e.target.value);
+                  }}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => {
+                createStation();
+              }}
+            >
+              Enregister
+            </Button>
+            {/* <Button
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => {
+                importDocument();
+              }}
+            >
+              Importer
+            </Button> */}
+            <input type="file" accept=".xlsx, .xls" onChange={importDocument} />
+          </Box>
+        </Box>
+      </Container>
+    </>
+  );
+};
+
+export default StationCreate;
