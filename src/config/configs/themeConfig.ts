@@ -2,6 +2,8 @@
 import { PaletteMode } from '@mui/material'
 
 // ** Types
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { ContentWidth } from 'src/@core/layouts/types'
 
 type ThemeConfig = {

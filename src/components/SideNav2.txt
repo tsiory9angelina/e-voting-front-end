@@ -15,6 +15,7 @@ const SideNav2 =(): VerticalNavItemsType =>{
     return [
         {
           title: 'Dashboard',
+          @tsignore
           icon: HomeOutline,
           path: '/'
         },

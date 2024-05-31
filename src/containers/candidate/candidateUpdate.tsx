@@ -196,7 +196,8 @@ const CandidateUpdate = () => {
                   }}
                 >
                   <Avatar
-                    src={candidate?.imageUrl || undefined}
+                    //src={candidate?.imageUrl || '' || undefined}
+                    src={candidate?.imageUrl ? URL.createObjectURL(candidate.imageUrl) : ''}
                     sx={{
                       minWidth: 300,
                       maxWidth: 300,

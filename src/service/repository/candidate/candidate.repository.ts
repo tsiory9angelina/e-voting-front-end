@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import Config from "../../../config/configs/config";
-import CandidateDTO from "../../../data/dto/candidate.dto";
+// //@ts-ignore
 
 const baseUrl: string = Config.BASE_URL;
 

@@ -25,8 +25,10 @@ const ImageUpload = () => {
             alignItems: "center",
           }}
         >
+          
           <Avatar
-            src={selectedImage}
+
+            src={selectedImage || ''}
             sx={{ width: 150, height: 150 }}
             variant="square"
           />

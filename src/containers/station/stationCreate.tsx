@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -8,7 +8,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { StationApplicatif } from "../../service/applicatif/station/station.applicatif";
 
 import { useEffect, useState } from "react";
 import StationDTO from "../../data/dto/station.dto";
@@ -16,7 +15,7 @@ import * as XLSX from "xlsx";
 import React from "react";
 
 const StationCreate = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const [isFileSelected, setIsFileSelected] = useState(false);
@@ -32,7 +31,7 @@ const StationCreate = () => {
       
      
       
-  const [token, setToken] = useState("");
+  //const [token, setToken] = useState("");
   const [excelFile, setExcelFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState(''); 
 
@@ -103,9 +102,9 @@ const StationCreate = () => {
       if (tokenUser.startsWith('"') && tokenUser.endsWith('"')) {
         // Enlever les guillemets doubles en utilisant replace avec une expression régulière
         tokenUser = tokenUser.replace(/^"(.*)"$/, "$1");
-        setToken(tokenUser.replace(/^"(.*)"$/, "$1"));
+        //setToken(tokenUser.replace(/^"(.*)"$/, "$1"));
       } else {
-        setToken(tokenUser);
+        //setToken(tokenUser);
       }
     }
   };
@@ -114,6 +113,8 @@ const StationCreate = () => {
     if (event.target.files && event.target.files.length > 0) {
       setExcelFile(event.target.files[0]);
       setIsFileSelected(true);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       setFileName(file.name); // Mettre à jour le nom du fichier
     }
   };
@@ -298,8 +299,8 @@ const StationCreate = () => {
                   disabled={isFileSelected}
                   value={nbVoters}
                   onChange={(e) => {
-                    setNbVoters(e.target.value);
-                  }}
+                    setNbVoters(Number(e.target.value));
+                    }}
                 />
               </Grid>
               
