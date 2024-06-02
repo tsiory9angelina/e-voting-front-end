@@ -7,6 +7,6 @@ export default interface StationDTO {
     fokontany: string;
     centre : string;
     code : string; 
-    nbVoters : number;
+    nbVoters : string;
   }
   

@@ -20,7 +20,11 @@ import { InputText } from "primereact/inputtext";
 import { VoterApplicatif } from "../../service/applicatif/voter/voter.applicatif";
 import VoterDTO from "../../data/dto/voter.dto";
 import QRCode from "qrcode.react";
-import { jsPDF } from 'jspdf'
+import { jsPDF } from "jspdf";
+import { FilterMatchMode } from "primereact/api";
+
+import ReactDOMServer from 'react-dom/server';
+
 
 // ** Types Imports
 //import { ThemeColor } from 'src/@core/layouts/types'
@@ -35,7 +39,9 @@ const TableVoters = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [voters, setVoters] = useState<VoterDTO[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [filters, setFilters] = useState<any>(null);
+  const [filters, setFilters] = useState<any>({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  });
 
   //Boite de dialogue DELETE ELEMENT
   const [open, setOpen] = useState(false);
@@ -142,6 +148,12 @@ const TableVoters = () => {
           // onClick={() => onClickDeleteProduct("center", rowData)}
           onClick={() => onClickDeleteDialog(rowData)}
         />
+        <Button
+          icon="pi pi-print"
+          className="p-button-rounded p-button-primary ms-2"
+          // onClick={() => onClickDeleteProduct("center", rowData)}
+          onClick={() => saveCardPDF(rowData)}
+        />
       </React.Fragment>
     );
   };
@@ -167,15 +179,20 @@ const TableVoters = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Non</Button>
             <Button
+              label="Annuler"
+              icon="pi pi-times"
+              onClick={handleClose}
+              className="p-button-text"
+            />
+            <Button
+              label="Supprimer"
+              icon="pi pi-check"
               onClick={() => {
                 deleteVoter(rowDataSelected);
               }}
               autoFocus
-            >
-              Oui
-            </Button>
+            />
           </DialogActions>
         </Dialog>
       </>
@@ -217,39 +234,155 @@ const TableVoters = () => {
   };
 
 
-  const SavePdf=(id : string)=>{
+  // const saveCardPDF = (voter : ExtendedVoterDTO) => {
+  //   const { _id, name, firstname, address } = voter;
+
+  //   const pdf = new jsPDF({
+  //     orientation: "portrait",
+  //     unit: "mm",
+  //     format: "A7",
+  //   });
+
+  //   // Calculer le centre de la page
+  //   const pageWidth = pdf.internal.pageSize.getWidth();
+  //   const pageHeight = pdf.internal.pageSize.getHeight();
+
+  //   // Titre en haut de la carte
+  //   pdf.setFontSize(14); // Taille de la police pour le titre
+  //   pdf.setFont("helvetica", "bold"); // Mettre le titre en gras
+  //   pdf.text("CARTE D'ELECTEUR", pageWidth / 2, 10, { align: "center" });
+
+  //   // Sous-titre en bas de la carte
+  //   pdf.setFontSize(8); // Taille de la police plus petite pour le sous-titre
+  //   pdf.setFont("helvetica", "normal"); // Enlever le gras
+  //   pdf.text("Republique de Madagascar", pageWidth / 2, pageHeight - 10, {
+  //     align: "center",
+  //   });
+
+  //   // QR code au milieu
+  //   const qrcodeId = "qrcode" + _id;
+  //   const base64Image =
+  //     !!document &&
+  //     (document.getElementById(qrcodeId) as HTMLCanvasElement).toDataURL();
+  //   const qrSize = 30; // Taille du QR code
+  //   pdf.addImage(
+  //     base64Image,
+  //     "PNG",
+  //     (pageWidth - qrSize) / 2,
+  //     (pageHeight - qrSize) / 2 - 15,
+  //     qrSize,
+  //     qrSize
+  //   );
+
+  //   // Informations en bas du QR code
+  //   pdf.setFontSize(10); // Taille de la police pour les informations
+  //   pdf.setFont("helvetica", "normal"); // Enlever le gras pour les informations
+  //   const infoStartY = (pageHeight + qrSize) / 2 - 5; // Commencer en dessous du QR code
+  //   pdf.text(`Nom: ${name}`, 10, infoStartY);
+  //   pdf.text(`Prénom: ${firstname}`, 10, infoStartY + 5);
+  //   pdf.text(`Adresse: ${address}`, 10, infoStartY + 10);
+
+  //   // Sauvegarder le PDF
+  //   const pdfName = `Carte-${name}-${firstname}.pdf`;
+  //   pdf.save(pdfName);
+  // };
+
+  const saveCardPDF = (voter : ExtendedVoterDTO) => {
+    const { _id, name, firstname, address } = voter;
+  
     const pdf = new jsPDF({
-      orientation: 'landscape',
-      unit: 'mm',
-      format: [40, 40]
-  })
-  const qrcode = "qrcode"+id;
-
-  const base64Image = !!document && (document.getElementById(qrcode) as HTMLCanvasElement).toDataURL();
-
-  pdf.addImage(base64Image, 'png', 0, 0, 40, 40);
-  const name = qrcode+"pdf";
-
-  pdf.save(name);
-  pdf.autoPrint();
+      orientation: "portrait",
+      unit: "mm",
+      format: "A7",
+    });
+  
+    // Calculer le centre de la page
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+  
+    // Titre en haut de la carte
+    pdf.setFontSize(14); // Taille de la police pour le titre
+    pdf.setFont("helvetica", "bold"); // Mettre le titre en gras
+    pdf.text("CARTE D'ELECTEUR", pageWidth / 2, 10, { align: "center" });
+  
+    // Sous-titre en bas de la carte
+    pdf.setFontSize(8); // Taille de la police plus petite pour le sous-titre
+    pdf.setFont("helvetica", "normal"); // Enlever le gras
+    pdf.text("Republique de Madagascar", pageWidth / 2, pageHeight - 10, {
+      align: "center",
+    });
+  
+    // Générer le QR code coloré
+    const QRCodeComponent = (
+      <QRCode
+        value={`https://example.com/${_id}`}
+        size={128}
+        bgColor={"#ffffff"}
+        fgColor={"#bc2a8d"}
+        level={"H"}
+        includeMargin={false}
+      />
+    );
+  
+    const svgString = ReactDOMServer.renderToStaticMarkup(QRCodeComponent);
+    const svgDataUri = `data:image/svg+xml;base64,${btoa(svgString)}`;
+  
+    // Ajouter le QR code au milieu de la page
+    const qrSize = 30; // Taille du QR code
+    pdf.addImage(
+      svgDataUri,
+      "SVG",
+      (pageWidth - qrSize) / 2,
+      (pageHeight - qrSize) / 2 - 15,
+      qrSize,
+      qrSize
+    );
+  
+    // Informations en bas du QR code
+    pdf.setFontSize(10); // Taille de la police pour les informations
+    pdf.setFont("helvetica", "normal"); // Enlever le gras pour les informations
+    const infoStartY = (pageHeight + qrSize) / 2 - 5; // Commencer en dessous du QR code
+    pdf.text(`Nom: ${name}`, 10, infoStartY);
+    pdf.text(`Prénom: ${firstname}`, 10, infoStartY + 5);
+    pdf.text(`Adresse: ${address}`, 10, infoStartY + 10);
+  
+    // Sauvegarder le PDF
+    const pdfName = `Carte-${name}-${firstname}.pdf`;
+    pdf.save(pdfName);
   }
+ 
+  const SavePdf = (id: string) => {
+    const pdf = new jsPDF({
+      orientation: "landscape",
+      unit: "mm",
+      format: [40, 40],
+    });
+    const qrcode = "qrcode" + id;
+
+    const base64Image =
+      !!document &&
+      (document.getElementById(qrcode) as HTMLCanvasElement).toDataURL();
+
+    pdf.addImage(base64Image, "png", 0, 0, 40, 40);
+    const name = qrcode + "pdf";
+
+    pdf.save(name);
+    pdf.autoPrint();
+  };
   const imageBodyTemplate = (rowData: ExtendedVoterDTO) => {
     const values = rowData._id;
-    return(
+    return (
       <div>
-        <QRCode
-        id={"qrcode"+rowData._id}
-        value= {values}
-        />
+        <QRCode id={"qrcode" + rowData._id} value={values} />
         <Button
-              label="Télécharger"
-              icon="pi pi-times"
-              onClick={() => SavePdf(rowData._id)}
-              className="p-button-text"
-            />
-
+          label="Télécharger"
+          icon="pi pi-times"
+          onClick={() => SavePdf(rowData._id)}
+          //onClick={() => saveCardPDF(rowData)}
+          className="p-button-text"
+        />
       </div>
-    )
+    );
   };
 
   useEffect(() => {
@@ -262,7 +395,7 @@ const TableVoters = () => {
   return (
     <>
       <DeleteDialog />
-      
+
       <Card>
         <TableContainer>
           <DataTable
@@ -290,6 +423,7 @@ const TableVoters = () => {
             stateStorage="session"
             stateKey="dt-state-demo-session"
             emptyMessage="Aucun  élécteur trouvé."
+            tableStyle={{ maxWidth: "500px" }}
           >
             <Column
               key="ID"
@@ -326,13 +460,13 @@ const TableVoters = () => {
               sortable
               filterPlaceholder="Search by name"
             ></Column>
-            <Column
+            {/* <Column
               key="birthLocation"
               field="birthLocation"
               header="Lieu de naissance"
               sortable
               filterPlaceholder="Search by name"
-            ></Column>
+            ></Column> */}
             <Column
               key="gender"
               field="gender"
@@ -347,7 +481,7 @@ const TableVoters = () => {
               sortable
               filterPlaceholder="Search by name"
             ></Column>
-            <Column
+            {/* <Column
               key="dateCin"
               field="dateCin"
               header="dateCin"
@@ -360,7 +494,7 @@ const TableVoters = () => {
               header="locationCin"
               sortable
               filterPlaceholder="Search by name"
-            ></Column>
+            ></Column> */}
             <Column
               key="address"
               field="address"

@@ -3,9 +3,9 @@
 import StationDTO from "../../../data/dto/station.dto";
 import { StationRepository } from "../../repository/station/station.repository";
 
-const createStation = (product: StationDTO, token: string) => {
+const createStation = (station: StationDTO, token: string) => {
     //send request
-    return StationRepository.createStation(product, token)
+    return StationRepository.createStation(station, token)
     .then(
         (response:any)=>{
             console.log(response)
@@ -40,6 +40,15 @@ const updateStation=(id: string,station: StationDTO, token: string) => {
         }
     )
 }
+const createStationByImportData= (station: any, token: string) => {
+    //send request
+    return StationRepository.createStationByImportData(station, token)
+    .then(
+        (response:any)=>{
+            console.log(response)
+            return response.data;
+        })
+}
 
 
 export const StationMetier={
@@ -47,5 +56,6 @@ export const StationMetier={
     getStations, 
     deleteStationById, 
     updateStation, 
-    getStationById
+    getStationById,
+    createStationByImportData
 }

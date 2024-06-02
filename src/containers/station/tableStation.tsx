@@ -7,7 +7,8 @@ import Card from "@mui/material/Card";
 import TableContainer from "@mui/material/TableContainer";
 
 // ** PRIMEREACT Imports
-import { DataTable } from "primereact/datatable";
+import { DataTable} from "primereact/datatable";
+import { FilterMatchMode } from 'primereact/api';
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -16,6 +17,7 @@ import { InputText } from "primereact/inputtext";
 import { StationApplicatif } from "../../service/applicatif/station/station.applicatif";
 import StationDTO from "../../data/dto/station.dto";
 import { Dialog } from "primereact/dialog";
+
 
 interface ExtendedStationDTO extends StationDTO {
   _id: string;
@@ -31,7 +33,7 @@ const TableStation = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [stations, setStations] = useState<StationDTO[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [filters, setFilters] = useState<any>(null);
+  const [filters, setFilters] = useState<any>({global: { value: null, matchMode: FilterMatchMode.CONTAINS}});
 
   const navigate = useNavigate();
 
@@ -208,7 +210,17 @@ const TableStation = () => {
             header={header}
             filters={filters}
             filterDisplay="menu"
-            globalFilterFields={["ID", "name", "region", "district", "commune", "fokontany", "centre", "code", "nbVoters"]}
+            globalFilterFields={[
+              "ID",
+              "name",
+              "region",
+              "district",
+              "commune",
+              "fokontany",
+              "centre",
+              "code",
+              "nbVoters",
+            ]}
             dataKey="id"
             stateStorage="session"
             stateKey="dt-state-demo-session"

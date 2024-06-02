@@ -26,7 +26,7 @@ const StationUpdate = () => {
   const [fokontany, setFokontany] = useState("");
   const [centre, setCentre] = useState("");
   const [code, setCode] = useState("");
-  const [nbVoters, setNbVoters] = useState(0);
+  const [nbVoters, setNbVoters] = useState("");
 
   const getStationFromParameter = async () => {
     let tokenUser = localStorage.getItem("token");
@@ -70,11 +70,14 @@ const StationUpdate = () => {
     if (token) {
       StationApplicatif.updateStation(params.id, stationValue, token)
         .then((res) => {
-          console.log("Modification effectue avec succes");
+          console.log("Modification effectué avec succes");
           console.log(res);
-          toast.success("Modification effectue avec succes", {
+          toast.success("Modification effectué avec succes", {
             position: "top-right",
           });
+          setTimeout(() => {
+            navigate("/dashboard/station");
+          }, 2000); // Attendre 2000 millisecondes (2 secondes)
         })
         .catch((err) => {
           toast.success(err, { position: "top-right" });
@@ -138,7 +141,7 @@ const StationUpdate = () => {
                     <TextField
                       id="region"
                       fullWidth
-                      required
+                      disabled
                       label="Region"
                       variant="filled"
                       value={region}
@@ -147,87 +150,88 @@ const StationUpdate = () => {
                       }}
                     />
                   </Grid>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    id="district"
-                    fullWidth
-                    required
-                    label="District"
-                    name="district"
-                    variant="filled"
-                    value={district}
-                    onChange={(e) => {
-                      setDistrict(e.target.value);
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    id="commune"
-                    fullWidth
-                    required
-                    label="Commune"
-                    variant="filled"
-                    value={commune}
-                    onChange={(e) => {
-                      setCommune(e.target.value);
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    id="fokontany"
-                    fullWidth
-                    required
-                    label="Fokontany"
-                    name="nom"
-                    variant="filled"
-                    value={fokontany}
-                    onChange={(e) => {
-                      setFokontany(e.target.value);
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    id="centre"
-                    fullWidth
-                    required
-                    label="Centre"
-                    variant="filled"
-                    value={centre}
-                    onChange={(e) => {
-                      setCentre(e.target.value);
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    id="code"
-                    fullWidth
-                    required
-                    label="Code"
-                    name="nom"
-                    variant="filled"
-                    value={code}
-                    onChange={(e) => {
-                      setCode(e.target.value);
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    id="nbVoters"
-                    fullWidth
-                    required
-                    label="Nombre d'élécteur"
-                    variant="filled"
-                    value={nbVoters}
-                    onChange={(e) => {
-                      setNbVoters(Number(e.target.value));
-                    }}
-                  />
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="district"
+                      fullWidth
+                      disabled
+                      label="District"
+                      name="district"
+                      variant="filled"
+                      value={district}
+                      onChange={(e) => {
+                        setDistrict(e.target.value);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="commune"
+                      fullWidth
+                      disabled
+                      label="Commune"
+                      variant="filled"
+                      value={commune}
+                      onChange={(e) => {
+                        setCommune(e.target.value);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="fokontany"
+                      fullWidth
+                      disabled
+                      label="Fokontany"
+                      name="nom"
+                      variant="filled"
+                      value={fokontany}
+                      onChange={(e) => {
+                        setFokontany(e.target.value);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="centre"
+                      fullWidth
+                      disabled
+                      label="Centre"
+                      variant="filled"
+                      value={centre}
+                      onChange={(e) => {
+                        setCentre(e.target.value);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="code"
+                      fullWidth
+                      disabled
+                      label="Code"
+                      name="nom"
+                      variant="filled"
+                      value={code}
+                      onChange={(e) => {
+                        setCode(e.target.value);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      id="nbVoters"
+                      fullWidth
+                      disabled
+                      label="Nombre d'élécteur"
+                      variant="filled"
+                      value={nbVoters}
+                      onChange={(e) => {
+                        setNbVoters(e.target.value);
+                      }}
+                    />
+                  </Grid>
                 </Grid>
                 <Button
                   variant="contained"
@@ -374,30 +378,33 @@ const StationUpdate = () => {
                       variant="filled"
                       value={nbVoters}
                       onChange={(e) => {
-                        setNbVoters(Number(e.target.value));
+                        setNbVoters(e.target.value);
                       }}
                     />
                   </Grid>
                 </Grid>
-                <Button
-                  variant="contained"
-                  color="warning"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => {
-                    navigate("/dashboard/station");
-                  }}
-                >
-                  Retour
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => {
-                    updateStation();
-                  }}
-                >
-                  Enregistrer
-                </Button>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="warning"
+                    sx={{ mt: 3, mb: 2, mr: 2 }}
+                    onClick={() => {
+                      navigate("/dashboard/station");
+                    }}
+                  >
+                    Retour
+                  </Button>
+                
+                  <Button
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={() => {
+                      updateStation();
+                    }}
+                  >
+                    Enregistrer
+                  </Button>
+                </Grid>
               </Box>
             </Box>
             <ToastContainer />

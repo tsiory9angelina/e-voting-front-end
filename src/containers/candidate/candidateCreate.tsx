@@ -15,6 +15,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { CandidateApplicatif } from "../../service/applicatif/candidate/candidate.applicatif";
+import { ToastContainer, toast } from "react-toastify";
 
 
 
@@ -131,8 +132,14 @@ const CandidateCreate = () => {
       }
       CandidateApplicatif.createCandidate(formData, tokenUser)
         .then(() => {
-          console.log("Candidat ajouté avec succès");
-          navigate("/dashboard/candidate")
+          
+          toast.success("Candidat ajouté avec succès", {
+            position: "top-right",
+          });
+          setTimeout(() => {
+            console.log("Candidat ajouté avec succès");
+            navigate("/dashboard/candidate")
+          }, 2000); // Attendre 2000 millisecondes (2 secondes)
         })
         .catch((err) => {
           console.log(err);
@@ -396,6 +403,7 @@ const CandidateCreate = () => {
           </Box>
           
         </Box>
+        <ToastContainer />
       </Container>
     </>
   );

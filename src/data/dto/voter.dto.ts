@@ -3,9 +3,9 @@ export default interface VoterDTO {
   name: string;
   firstname: string;
   gender: string;
-  birthDate: Date | null;
+  birthDate: string | Date | null;
   birthLocation: string;
-  dateCin: Date | null;
+  dateCin: string | Date | null;
   locationCin: string;
   address: string;
   email: string;

@@ -105,7 +105,8 @@ function SideNav() {
         <MenuItem
           active={
             location.pathname === "/dashboard/candidate" ||
-            location.pathname === "/dashboard/candidate/create"
+            location.pathname === "/dashboard/candidate/create" ||
+            location.pathname.startsWith("/dashboard/candidate/update/")
           }
           component={<Link to="/dashboard/candidate" />}
           icon={<NoteAddTwoToneIcon />}
@@ -116,7 +117,8 @@ function SideNav() {
         <MenuItem
           active={
             location.pathname === "/dashboard/station" ||
-            location.pathname === "/dashboard/station/create"
+            location.pathname === "/dashboard/station/create"||
+            location.pathname.startsWith("/dashboard/station/update/")
           }
           component={<Link to="/dashboard/station" />}
           icon={<RoofingTwoToneIcon />}
@@ -126,7 +128,8 @@ function SideNav() {
         <MenuItem
           active={
             location.pathname === "/dashboard/voter" ||
-            location.pathname === "/dashboard/voter/create"
+            location.pathname === "/dashboard/voter/create"||
+            location.pathname.startsWith("/dashboard/voter/update/")
           }
           component={<Link to="/dashboard/voter" />}
           icon={<HowToRegTwoToneIcon />}

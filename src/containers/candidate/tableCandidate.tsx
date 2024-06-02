@@ -16,6 +16,7 @@ import { CandidateApplicatif } from "../../service/applicatif/candidate/candidat
 import { Avatar } from "@mui/material";
 import { Dialog } from "primereact/dialog";
 import CandidateDTO from "../../data/dto/candidate.dto";
+import { FilterMatchMode } from "primereact/api";
 
 // ** Types Imports
 //import { ThemeColor } from 'src/@core/layouts/types'
@@ -28,7 +29,7 @@ const TableCandidate = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [candidates, setCandidates] = useState<CandidateDTO[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [filters, setFilters] = useState<any>(null);
+  const [filters, setFilters] = useState<any>({global: { value: null, matchMode: FilterMatchMode.CONTAINS}});
 
   const navigate = useNavigate();
 

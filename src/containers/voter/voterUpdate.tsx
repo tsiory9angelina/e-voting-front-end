@@ -4,7 +4,11 @@ import {
   Box,
   Button,
   Container,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -12,7 +16,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
-
 
 //SERVICE
 import { VoterApplicatif } from "../../service/applicatif/voter/voter.applicatif";
@@ -72,29 +75,44 @@ const VoterUpdate = () => {
       name: name,
       firstname: firstname,
       gender: gender,
-      birthDate: birthDate ? dayjs(birthDate).toDate() : null,
+      //birthDate: birthDate ? dayjs(birthDate).toDate() : null,
+      birthDate: birthDate
+        ? new Date(dayjs(birthDate).format("YYYY-MM-DD"))
+            .toISOString()
+            .split("T")[0]
+        : null,
       birthLocation: birthLocation,
-      dateCin: dateCin ? dayjs(dateCin).toDate() : null,
+      //dateCin: dateCin ? dayjs(dateCin).toDate() : null,
+      dateCin: dateCin
+        ? new Date(dayjs(dateCin).format("YYYY-MM-DD"))
+            .toISOString()
+            .split("T")[0]
+        : null,
       locationCin: locationCin,
       address: address,
       email: email,
       //password:password // pas requis
     };
-    console.log(voter)
-    console.log(params.id+" ========================"+ token)
-     if (token) {
+    console.log(voter);
+    console.log(params.id + " ========================" + token);
+    if (token) {
       VoterApplicatif.updateVoterById(params.id, voter, token)
         .then((res) => {
           console.log("Modification de l'electeur effectue avec succes");
-          console.log(res)
+          console.log(res);
           // navigate("/dashboard/voter")
-          toast.success("Modification de l'electeur effectue avec succes", { position: "top-right" });
+          toast.success("Modification de l'electeur effectue avec succes", {
+            position: "top-right",
+          });
+          setTimeout(() => {
+            navigate("/dashboard/voter")
+          }, 2000);
         })
         .catch((err) => {
           toast.success(err, { position: "top-right" });
           console.log(err);
         });
-   }
+    }
   };
 
   useEffect(() => {
@@ -160,6 +178,7 @@ const VoterUpdate = () => {
                     value={gender}
                     disabled
                   />
+                  
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -173,7 +192,7 @@ const VoterUpdate = () => {
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       label="Date de naissance"
                       value={birthDate}
@@ -187,9 +206,9 @@ const VoterUpdate = () => {
                         },
                       }}
                     />
-                  </LocalizationProvider> */}
+                  </LocalizationProvider>
 
-                  <TextField
+                  {/* <TextField
                     id="birthDate"
                     fullWidth
                     label="birthDate"
@@ -197,7 +216,7 @@ const VoterUpdate = () => {
                     variant="filled"
                     value={birthDate}
                    disabled
-                  />
+                  /> */}
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -221,22 +240,22 @@ const VoterUpdate = () => {
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                       label="Date de délivrance CIN"
                       value={dateCin}
-                      onChange={(newValue) => setDateCin(newValue)}
                       slotProps={{
                         textField: {
                           variant: "filled",
                           required: true,
                           fullWidth: true,
+                          disabled: true,
                           // Ajoutez d'autres props ici si nécessaire
                         },
                       }}
                     />
-                  </LocalizationProvider> */}
-                   <TextField
+                  </LocalizationProvider>
+                  {/* <TextField
                     id="dateCin"
                     fullWidth
                     label="dateCin"
@@ -245,7 +264,7 @@ const VoterUpdate = () => {
                     value={dateCin}
                     disabled
                    
-                  />
+                  /> */}
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -331,7 +350,7 @@ const VoterUpdate = () => {
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextField
+                  {/* <TextField
                     id="gender"
                     fullWidth
                     required
@@ -342,7 +361,22 @@ const VoterUpdate = () => {
                     onChange={(e) => {
                       setGender(e.target.value);
                     }}
-                  />
+                  /> */}
+                  <FormControl variant="filled" fullWidth required>
+                    <InputLabel id="gender-label">Sexe</InputLabel>
+                    <Select
+                      labelId="gender-label"
+                      id="gender"
+                      value={gender}
+                      onChange={(e) => {
+                        setGender(e.target.value);
+                      }}
+                      label="Sexe"
+                    >
+                      <MenuItem value="Masculin">Masculin</MenuItem>
+                      <MenuItem value="Féminin">Féminin</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField

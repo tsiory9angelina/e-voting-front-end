@@ -137,7 +137,10 @@ const CandidateUpdate = () => {
           toast.success("Modification du candidat effectue avec succes", {
               position: "top-right",
             });
-        navigate("/dashboard/candidate")
+            setTimeout(() => {
+              navigate("/dashboard/candidate")
+            }, 2000);
+        
 
         })
         .catch((err) => {
@@ -196,8 +199,7 @@ const CandidateUpdate = () => {
                   }}
                 >
                   <Avatar
-                    //src={candidate?.imageUrl || '' || undefined}
-                    src={candidate?.imageUrl ? URL.createObjectURL(candidate.imageUrl) : ''}
+                    src={imagePreviewUrl || undefined}
                     sx={{
                       minWidth: 300,
                       maxWidth: 300,

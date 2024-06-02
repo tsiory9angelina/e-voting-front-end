@@ -36,10 +36,23 @@ const updateStation = (id: string, station: StationDTO, token: string) => {
   });
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createStationByImportData  = (station: any, token: string) => {
+  const create_station = axios.post(
+    `${baseUrl}/api/admin/station/create`,
+    station,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  return create_station;
+}; 
+
 export const StationRepository = {
   createStation,
   getStations,
   deleteStationById,
   updateStation,
   getStationById,
+  createStationByImportData
 };

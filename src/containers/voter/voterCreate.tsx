@@ -20,8 +20,12 @@ import VoterDTO from "../../data/dto/voter.dto";
 import { StationApplicatif } from "../../service/applicatif/station/station.applicatif";
 import StationDTO from "../../data/dto/station.dto";
 import MenuItem from "@mui/material/MenuItem";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const VoterCreate = () => {
+  const navigate = useNavigate();
+
   // //const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
   // const [birthDate, setBirthDate] = useState<Dayjs | null>();
   // const [birthLocation, setBirthLocation] = useState("");
@@ -44,22 +48,29 @@ const VoterCreate = () => {
   const [station, setStation] = useState("");
   const [stations, setStations] = useState<StationDTO[]>([]);
 
-
-
-
   const createVoter = () => {
     const voter: VoterDTO = {
       cin: cin,
       name: name,
       firstname: firstname,
       gender: gender,
-      birthDate: birthDate ? dayjs(birthDate).toDate() : null,
+      //birthDate: birthDate ? dayjs(birthDate).toDate() : null,
+      birthDate: birthDate
+        ? new Date(dayjs(birthDate).format("YYYY-MM-DD"))
+            .toISOString()
+            .split("T")[0]
+        : null,
       birthLocation: birthLocation,
-      dateCin: dateCin ? dayjs(dateCin).toDate() : null,
+      //dateCin: dateCin ? dayjs(dateCin).toDate() : null,
+      dateCin: dateCin
+        ? new Date(dayjs(dateCin).format("YYYY-MM-DD"))
+            .toISOString()
+            .split("T")[0]
+        : null,
       locationCin: locationCin,
       address: address,
       email: email,
-      station : station,
+      station: station,
       //password:password // pas requis
     };
     console.log("--------------------voter ------------------------");
@@ -76,7 +87,13 @@ const VoterCreate = () => {
 
       VoterApplicatif.createVoter(voter, tokenUser)
         .then(() => {
-          console.log("Electeur ajouté avec succès");
+          toast.success("Candidat ajouté avec succès", {
+            position: "top-right",
+          });
+          setTimeout(() => {
+            console.log("Electeur ajouté avec succès");
+            navigate("/dashboard/voter");
+          }, 2000); // Attendre 2000 millisecondes (2 secondes)
         })
         .catch((err) => {
           console.log(err.response.data);
@@ -112,7 +129,6 @@ const VoterCreate = () => {
   useEffect(() => {
     getStationsList();
   }, []);
-
 
   return (
     <>
@@ -165,7 +181,7 @@ const VoterCreate = () => {
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField
+                {/* <TextField
                   id="gender"
                   fullWidth
                   required
@@ -176,7 +192,22 @@ const VoterCreate = () => {
                   onChange={(e) => {
                     setGender(e.target.value);
                   }}
-                />
+                /> */}
+                <FormControl variant="filled" fullWidth required>
+                  <InputLabel id="gender-label">Sexe</InputLabel>
+                  <Select
+                    labelId="gender-label"
+                    id="gender"
+                    value={gender}
+                    onChange={(e) => {
+                      setGender(e.target.value);
+                    }}
+                    label="Sexe"
+                  >
+                    <MenuItem value="Masculin">Masculin</MenuItem>
+                    <MenuItem value="Féminin">Féminin</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -267,7 +298,7 @@ const VoterCreate = () => {
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-              <FormControl variant="filled" fullWidth required>
+                <FormControl variant="filled" fullWidth required>
                   <InputLabel id="station-label">Bureau de vote</InputLabel>
                   <Select
                     labelId="station-label"
@@ -275,7 +306,7 @@ const VoterCreate = () => {
                     value={station}
                     onChange={(e) => setStation(e.target.value)}
                   >
-                    {stations.map((station : StationDTO) => (
+                    {stations.map((station: StationDTO) => (
                       <MenuItem key={station.name} value={station._id}>
                         {station.name}
                       </MenuItem>
@@ -297,7 +328,6 @@ const VoterCreate = () => {
                   }}
                 />
               </Grid>
-              
             </Grid>
             <Button
               variant="contained"
@@ -310,6 +340,7 @@ const VoterCreate = () => {
             </Button>
           </Box>
         </Box>
+        <ToastContainer />
       </Container>
     </>
   );

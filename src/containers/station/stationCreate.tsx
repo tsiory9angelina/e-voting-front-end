@@ -13,33 +13,40 @@ import { useEffect, useState } from "react";
 import StationDTO from "../../data/dto/station.dto";
 import * as XLSX from "xlsx";
 import React from "react";
+import { StationApplicatif } from "../../service/applicatif/station/station.applicatif";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const StationCreate = () => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
+  const [token, setToken] = useState("");
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [nameStation, setNameStation] = useState("");
-  const [region, setRegion]= useState("");
-  const [district, setDistrict]= useState("");
-  const [commune, setCommune]= useState("");
-  const [fokontany, setFokontany]= useState("");
-  const [centre, setCentre]= useState("");
-  const [code, setCode]= useState("");
-  const [nbVoters, setNbVoters]= useState(0);
-     
-      
-     
-      
+  const [region, setRegion] = useState("");
+  const [district, setDistrict] = useState("");
+  const [commune, setCommune] = useState("");
+  const [fokontany, setFokontany] = useState("");
+  const [centre, setCentre] = useState("");
+  const [code, setCode] = useState("");
+  const [nbVoters, setNbVoters] = useState("");
+
   //const [token, setToken] = useState("");
   const [excelFile, setExcelFile] = useState<File | null>(null);
-  const [fileName, setFileName] = useState(''); 
+  const [fileName, setFileName] = useState("");
 
   const handleFileButtonClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
+
+  const formatDataByRemovingEmptyRecords = (data: StationDTO[]) => {
+    // Filtrer les enregistrements où la propriété 'name' est vide
+    //return data.filter((item) => item.name !== "");
+    return data.filter((item: StationDTO) => item.name !== "" && item.region !== "" && item.district !== "" && item.commune !== "");
+    };
 
   const createStation = () => {
     if (excelFile) {
@@ -56,19 +63,40 @@ const StationCreate = () => {
 
         jsonData.shift(); // Supprimer la première ligne si elle contient les titres des colonnes
 
-        const formattedData = jsonData.map((row: any[]) => ({
+        let formattedData = jsonData.map((row: any[]) => ({
+          name: row[7] || "",
           region: row[1] || "",
           district: row[2] || "",
           commune: row[3] || "",
           fokontany: row[4] || "",
-          centreDeVote: row[5] || "",
-          codeBV: row[6] || "",
-          bureauDeVote: row[7] || "",
-          nombreDElecteurs: row[8] || 0,
+          centre: row[5] || "",
+          code: row[6] || "",
+          nbVoters: row[8] || 0,
         }));
-
+        console.log("Avant ====> ")
         console.log(formattedData);
-        // Ici, vous pouvez envoyer formattedData à votre serveur via Axios
+        if (token !== "") {
+          
+          
+          formattedData = formatDataByRemovingEmptyRecords(formattedData)
+          console.log("Apres ====> "+token)
+          console.log(formattedData);
+        StationApplicatif.createStationByImportData(formattedData, token)
+          .then((res) => {
+            console.log(res);
+            console.log("Bureau de vote ajouté avec succès");
+            
+            toast.success("Bureau de vote ajouté avec succès", {
+              position: "top-right",
+            });
+            setTimeout(() => {
+              navigate("/dashboard/station");
+            }, 2000); // Attendre 2000 millisecondes (2 secondes)
+          })
+          .catch((err) => {
+            console.log(err.response.data);
+          });
+      }
       };
       reader.readAsBinaryString(excelFile);
     } else {
@@ -77,23 +105,32 @@ const StationCreate = () => {
       const station: StationDTO = {
         name: nameStation,
         region: region,
-        district : district,
-        commune : commune,
+        district: district,
+        commune: commune,
         fokontany: fokontany,
-        centre : centre,
-        code : code,
-        nbVoters : nbVoters
+        centre: centre,
+        code: code,
+        nbVoters: nbVoters,
       };
       console.log(station);
-      // StationApplicatif.createStation(station, token)
-      //   .then((res) => {
-      //     console.log(res);
-      //     console.log("Bureau de vote ajouté avec succès");
-      //     navigate("/dashboard/station");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err.response.data);
-      //   });
+      
+      if (token !== "" && token) {
+        StationApplicatif.createStation(station, token)
+          .then((res) => {
+            console.log(res);
+            console.log("Bureau de vote ajouté avec succès");
+            
+            toast.success("Bureau de vote ajouté avec succès", {
+              position: "top-right",
+            });
+            setTimeout(() => {
+              navigate("/dashboard/station");
+            }, 2000); // Attendre 2000 millisecondes (2 secondes)
+          })
+          .catch((err) => {
+            console.log(err.response.data);
+          });
+      }
     }
   };
   const checkToken = () => {
@@ -102,21 +139,27 @@ const StationCreate = () => {
       if (tokenUser.startsWith('"') && tokenUser.endsWith('"')) {
         // Enlever les guillemets doubles en utilisant replace avec une expression régulière
         tokenUser = tokenUser.replace(/^"(.*)"$/, "$1");
-        //setToken(tokenUser.replace(/^"(.*)"$/, "$1"));
+        setToken(tokenUser.replace(/^"(.*)"$/, "$1"));
       } else {
-        //setToken(tokenUser);
+        setToken(tokenUser);
       }
     }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // if (event.target.files && event.target.files.length > 0) {
+    //   setExcelFile(event.target.files[0]);
+    //   setIsFileSelected(true);
+    //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //   // @ts-expect-error
+    //   setFileName(file.name); // Mettre à jour le nom du fichier
+    // }
     if (event.target.files && event.target.files.length > 0) {
-      setExcelFile(event.target.files[0]);
+      const selectedFile = event.target.files[0]; // Déclaration de la variable file
+      setExcelFile(selectedFile);
       setIsFileSelected(true);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      setFileName(file.name); // Mettre à jour le nom du fichier
-    }
+      setFileName(selectedFile.name); // Utilisation de la variable file
+      }
   };
 
   // const importDocument = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -299,12 +342,11 @@ const StationCreate = () => {
                   disabled={isFileSelected}
                   value={nbVoters}
                   onChange={(e) => {
-                    setNbVoters(Number(e.target.value));
-                    }}
+                    setNbVoters(e.target.value);
+                  }}
                 />
               </Grid>
-              
-                
+
               <Grid item>
                 <Button
                   variant="contained"
@@ -349,15 +391,16 @@ const StationCreate = () => {
                 </Button>
               </Grid>
               {isFileSelected && (
-<Grid item>
-<Typography variant="subtitle1">
-Fichier sélectionné : {fileName}
-</Typography>
-</Grid>
-)}
+                <Grid item>
+                  <Typography variant="subtitle1">
+                    Fichier sélectionné : {fileName}
+                  </Typography>
+                </Grid>
+              )}
             </Grid>
           </Box>
         </Box>
+        <ToastContainer />
       </Container>
     </>
   );
