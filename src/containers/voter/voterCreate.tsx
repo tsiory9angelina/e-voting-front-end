@@ -20,20 +20,13 @@ import VoterDTO from "../../data/dto/voter.dto";
 import { StationApplicatif } from "../../service/applicatif/station/station.applicatif";
 import StationDTO from "../../data/dto/station.dto";
 import MenuItem from "@mui/material/MenuItem";
+import Autocomplete from "@mui/material/Autocomplete";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const VoterCreate = () => {
   const navigate = useNavigate();
-
-  // //const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
-  // const [birthDate, setBirthDate] = useState<Dayjs | null>();
-  // const [birthLocation, setBirthLocation] = useState("");
-  // const [cin, setCin] = useState("");
-  // const [address, setAddress] = useState("");
-  // // const [login, setLogin] = useState("");
-  // // const [password, setPassword] = useState("");
-  // // const [statusVote, setStatusVote] = useState("");
 
   const [cin, setCin] = useState("");
   const [name, setName] = useState("");
@@ -54,14 +47,12 @@ const VoterCreate = () => {
       name: name,
       firstname: firstname,
       gender: gender,
-      //birthDate: birthDate ? dayjs(birthDate).toDate() : null,
       birthDate: birthDate
         ? new Date(dayjs(birthDate).format("YYYY-MM-DD"))
             .toISOString()
             .split("T")[0]
         : null,
       birthLocation: birthLocation,
-      //dateCin: dateCin ? dayjs(dateCin).toDate() : null,
       dateCin: dateCin
         ? new Date(dayjs(dateCin).format("YYYY-MM-DD"))
             .toISOString()
@@ -71,17 +62,14 @@ const VoterCreate = () => {
       address: address,
       email: email,
       station: station,
-      //password:password // pas requis
     };
-    console.log("--------------------voter ------------------------");
-    console.log(voter);
-    console.log("-----------------fin---voter ------------------------");
+
     let tokenUser = localStorage.getItem("token");
 
     if (tokenUser) {
       // Vérifier si le token commence et se termine par des guillemets doubles
+      // Enlever les guillemets doubles en utilisant replace avec une expression régulière
       if (tokenUser.startsWith('"') && tokenUser.endsWith('"')) {
-        // Enlever les guillemets doubles en utilisant replace avec une expression régulière
         tokenUser = tokenUser.replace(/^"(.*)"$/, "$1");
       }
 
@@ -101,23 +89,29 @@ const VoterCreate = () => {
     }
   };
 
+  const STATIONS_CACHE_KEY = "stationsData";
+
   const getStationsList = () => {
-    console.log("-----------token new");
-    console.log(localStorage.getItem("token"));
-    console.log("-----------fin token new");
+    // Tenter de récupérer les données du cache
+    const cachedStations = localStorage.getItem(STATIONS_CACHE_KEY);
+    if (cachedStations) {
+      setStations(JSON.parse(cachedStations));
+      return;
+    }
+
     let tokenUser = localStorage.getItem("token");
 
     if (tokenUser) {
       // Vérifier si le token commence et se termine par des guillemets doubles
+      // Enlever les guillemets doubles en utilisant replace avec une expression régulière
       if (tokenUser.startsWith('"') && tokenUser.endsWith('"')) {
-        // Enlever les guillemets doubles en utilisant replace avec une expression régulière
         tokenUser = tokenUser.replace(/^"(.*)"$/, "$1");
       }
 
       StationApplicatif.getStations(tokenUser)
         .then((response) => {
-          console.log("-----Stations list-------");
-          console.log(response);
+          // Stocker les données dans le cache après la récupération
+          localStorage.setItem(STATIONS_CACHE_KEY, JSON.stringify(response));
           setStations(response || []);
         })
         .catch((err: Error) => {
@@ -125,6 +119,11 @@ const VoterCreate = () => {
         });
     }
   };
+
+  const filterOptions = createFilterOptions({
+    matchFrom: "any",
+    stringify: (option: StationDTO) => option.name,
+  });
 
   useEffect(() => {
     getStationsList();
@@ -181,18 +180,6 @@ const VoterCreate = () => {
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                {/* <TextField
-                  id="gender"
-                  fullWidth
-                  required
-                  label="Sexe"
-                  name="gender"
-                  variant="filled"
-                  value={gender}
-                  onChange={(e) => {
-                    setGender(e.target.value);
-                  }}
-                /> */}
                 <FormControl variant="filled" fullWidth required>
                   <InputLabel id="gender-label">Sexe</InputLabel>
                   <Select
@@ -297,7 +284,7 @@ const VoterCreate = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              {/* <Grid item xs={12} md={6}>
                 <FormControl variant="filled" fullWidth required>
                   <InputLabel id="station-label">Bureau de vote</InputLabel>
                   <Select
@@ -307,12 +294,39 @@ const VoterCreate = () => {
                     onChange={(e) => setStation(e.target.value)}
                   >
                     {stations.map((station: StationDTO) => (
-                      <MenuItem key={station.name} value={station._id}>
+                      <MenuItem key={station._id} value={station._id}>
                         {station.name}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
+              </Grid> */}
+              <Grid item xs={12} md={6}>
+                <Autocomplete
+                  id="station-autocomplete"
+                  options={stations}
+                  getOptionLabel={(option) => option.name}
+                  value={stations.find((opt) => opt._id === station) || null}
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-expect-error
+                  onChange={(event, newValue: StationDTO | null) => {
+                    setStation(newValue?._id ?? "");
+                  }}
+                  filterOptions={filterOptions}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option._id}>
+                      {option.name}
+                    </li>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Bureau de vote"
+                      variant="filled"
+                      required
+                    />
+                  )}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField

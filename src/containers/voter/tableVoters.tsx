@@ -23,19 +23,25 @@ import QRCode from "qrcode.react";
 import { jsPDF } from "jspdf";
 import { FilterMatchMode } from "primereact/api";
 
-import ReactDOMServer from 'react-dom/server';
-
+import html2canvas from "html2canvas";
+import { createRoot } from "react-dom/client";
 
 // ** Types Imports
 //import { ThemeColor } from 'src/@core/layouts/types'
 interface ExtendedVoterDTO extends VoterDTO {
   _id: string;
 }
+// ** Types of the properties of the QR Code Parameters
+type QRCodeProps = {
+  id: string;
+  value: string;
+};
+
 const TableVoters = () => {
   const [token, setToken] = useState("");
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [rowDataSelected, setRowDataSelected] = useState<any | null>();
+  const [rowDataSelected, setRowDataSelected] =
+    useState<ExtendedVoterDTO | null>();
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [voters, setVoters] = useState<VoterDTO[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -233,124 +239,96 @@ const TableVoters = () => {
     }
   };
 
+  const QRCodeComponent = ({ id, value }: QRCodeProps) => (
+    <QRCode
+      id={id}
+      value={value}
+      size={128}
+      bgColor="#FFFFFF"
+      fgColor="#1DA1F2"
+      level="Q"
+    />
+  );
 
-  // const saveCardPDF = (voter : ExtendedVoterDTO) => {
-  //   const { _id, name, firstname, address } = voter;
-
-  //   const pdf = new jsPDF({
-  //     orientation: "portrait",
-  //     unit: "mm",
-  //     format: "A7",
-  //   });
-
-  //   // Calculer le centre de la page
-  //   const pageWidth = pdf.internal.pageSize.getWidth();
-  //   const pageHeight = pdf.internal.pageSize.getHeight();
-
-  //   // Titre en haut de la carte
-  //   pdf.setFontSize(14); // Taille de la police pour le titre
-  //   pdf.setFont("helvetica", "bold"); // Mettre le titre en gras
-  //   pdf.text("CARTE D'ELECTEUR", pageWidth / 2, 10, { align: "center" });
-
-  //   // Sous-titre en bas de la carte
-  //   pdf.setFontSize(8); // Taille de la police plus petite pour le sous-titre
-  //   pdf.setFont("helvetica", "normal"); // Enlever le gras
-  //   pdf.text("Republique de Madagascar", pageWidth / 2, pageHeight - 10, {
-  //     align: "center",
-  //   });
-
-  //   // QR code au milieu
-  //   const qrcodeId = "qrcode" + _id;
-  //   const base64Image =
-  //     !!document &&
-  //     (document.getElementById(qrcodeId) as HTMLCanvasElement).toDataURL();
-  //   const qrSize = 30; // Taille du QR code
-  //   pdf.addImage(
-  //     base64Image,
-  //     "PNG",
-  //     (pageWidth - qrSize) / 2,
-  //     (pageHeight - qrSize) / 2 - 15,
-  //     qrSize,
-  //     qrSize
-  //   );
-
-  //   // Informations en bas du QR code
-  //   pdf.setFontSize(10); // Taille de la police pour les informations
-  //   pdf.setFont("helvetica", "normal"); // Enlever le gras pour les informations
-  //   const infoStartY = (pageHeight + qrSize) / 2 - 5; // Commencer en dessous du QR code
-  //   pdf.text(`Nom: ${name}`, 10, infoStartY);
-  //   pdf.text(`Prénom: ${firstname}`, 10, infoStartY + 5);
-  //   pdf.text(`Adresse: ${address}`, 10, infoStartY + 10);
-
-  //   // Sauvegarder le PDF
-  //   const pdfName = `Carte-${name}-${firstname}.pdf`;
-  //   pdf.save(pdfName);
-  // };
-
-  const saveCardPDF = (voter : ExtendedVoterDTO) => {
+  const saveCardPDF = async (voter: ExtendedVoterDTO) => {
     const { _id, name, firstname, address } = voter;
-  
+
+    // Créez un élément temporaire pour le rendu du QR code
+    const tempElement = document.createElement("div");
+    tempElement.setAttribute("id", `qrcode-${_id}`);
+    document.body.appendChild(tempElement);
+
+    // Rendez le composant QRCode dans l'élément temporaire
+    const root = createRoot(tempElement);
+    root.render(
+      <QRCodeComponent id={`qrcode-${_id}`} value={_id.toString()} />
+    );
+
+    // Attendez que le composant soit rendu
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    // Vérifiez que le premier enfant de l'élément temporaire est bien un HTMLElement
+    const qrCodeElement = tempElement.firstChild;
+    if (!(qrCodeElement instanceof HTMLElement)) {
+      console.error("Le QR code n'a pas été rendu correctement.");
+      return;
+    }
+
+    // Utilisez html2canvas pour capturer l'image du QR code
+    const canvas = await html2canvas(qrCodeElement);
+    const qrCodeDataUri = canvas.toDataURL("image/png");
+
+    // Supprimez l'élément temporaire après la capture
+    document.body.removeChild(tempElement);
+
+    // Créez le PDF
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "mm",
       format: "A7",
     });
-  
-    // Calculer le centre de la page
+
+    // Ajoutez l'image du QR code au PDF
+    const qrSize = 30; // Taille du QR code
+    pdf.addImage(
+      qrCodeDataUri,
+      "PNG",
+      (pdf.internal.pageSize.getWidth() - qrSize) / 2,
+      (pdf.internal.pageSize.getHeight() - qrSize) / 2 - 15,
+      qrSize,
+      qrSize
+    );
+
+    // Ajoutez les informations en dessous du QR code
+    pdf.setFontSize(10);
+    pdf.setFont("helvetica", "normal");
+
+    //   // Calculer le centre de la page
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
-  
+
     // Titre en haut de la carte
     pdf.setFontSize(14); // Taille de la police pour le titre
     pdf.setFont("helvetica", "bold"); // Mettre le titre en gras
     pdf.text("CARTE D'ELECTEUR", pageWidth / 2, 10, { align: "center" });
-  
+
     // Sous-titre en bas de la carte
     pdf.setFontSize(8); // Taille de la police plus petite pour le sous-titre
     pdf.setFont("helvetica", "normal"); // Enlever le gras
     pdf.text("Republique de Madagascar", pageWidth / 2, pageHeight - 10, {
       align: "center",
     });
-  
-    // Générer le QR code coloré
-    const QRCodeComponent = (
-      <QRCode
-        value={`https://example.com/${_id}`}
-        size={128}
-        bgColor={"#ffffff"}
-        fgColor={"#bc2a8d"}
-        level={"H"}
-        includeMargin={false}
-      />
-    );
-  
-    const svgString = ReactDOMServer.renderToStaticMarkup(QRCodeComponent);
-    const svgDataUri = `data:image/svg+xml;base64,${btoa(svgString)}`;
-  
-    // Ajouter le QR code au milieu de la page
-    const qrSize = 30; // Taille du QR code
-    pdf.addImage(
-      svgDataUri,
-      "SVG",
-      (pageWidth - qrSize) / 2,
-      (pageHeight - qrSize) / 2 - 15,
-      qrSize,
-      qrSize
-    );
-  
-    // Informations en bas du QR code
-    pdf.setFontSize(10); // Taille de la police pour les informations
-    pdf.setFont("helvetica", "normal"); // Enlever le gras pour les informations
-    const infoStartY = (pageHeight + qrSize) / 2 - 5; // Commencer en dessous du QR code
+
+    const infoStartY = (pdf.internal.pageSize.getHeight() + qrSize) / 2 - 5;
     pdf.text(`Nom: ${name}`, 10, infoStartY);
     pdf.text(`Prénom: ${firstname}`, 10, infoStartY + 5);
     pdf.text(`Adresse: ${address}`, 10, infoStartY + 10);
-  
-    // Sauvegarder le PDF
+
+    // Sauvegardez le PDF
     const pdfName = `Carte-${name}-${firstname}.pdf`;
     pdf.save(pdfName);
-  }
- 
+  };
+
   const SavePdf = (id: string) => {
     const pdf = new jsPDF({
       orientation: "landscape",

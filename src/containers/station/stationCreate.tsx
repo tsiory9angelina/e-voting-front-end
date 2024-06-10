@@ -75,13 +75,20 @@ const StationCreate = () => {
         }));
         console.log("Avant ====> ")
         console.log(formattedData);
+
+        // Transformer en format payload voulu
+        
+        
         if (token !== "") {
           
           
           formattedData = formatDataByRemovingEmptyRecords(formattedData)
           console.log("Apres ====> "+token)
           console.log(formattedData);
-        StationApplicatif.createStationByImportData(formattedData, token)
+          const stationsDataListFormatted = {
+            stations: formattedData
+            };
+        StationApplicatif.createStationByImportData(stationsDataListFormatted, token)
           .then((res) => {
             console.log(res);
             console.log("Bureau de vote ajouté avec succès");

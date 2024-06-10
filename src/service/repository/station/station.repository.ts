@@ -39,7 +39,7 @@ const updateStation = (id: string, station: StationDTO, token: string) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createStationByImportData  = (station: any, token: string) => {
   const create_station = axios.post(
-    `${baseUrl}/api/admin/station/create`,
+    `${baseUrl}/api/admin/station/create/multiple`,
     station,
     {
       headers: { Authorization: `Bearer ${token}` },
