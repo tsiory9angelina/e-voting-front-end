@@ -34,6 +34,7 @@ const TableStation = () => {
   const [stations, setStations] = useState<StationDTO[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [filters, setFilters] = useState<any>({global: { value: null, matchMode: FilterMatchMode.CONTAINS}});
+  const [loading, setLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
 
@@ -91,6 +92,7 @@ const TableStation = () => {
           console.log("-----Stations list-------");
           console.log(response);
           setStations(response || []);
+          setLoading(false);
         })
         .catch((err: Error) => {
           console.log(err);
@@ -189,6 +191,24 @@ const TableStation = () => {
     );
   };
 
+  // Style CSS pour les cellules avec ellipsis
+const cellStyle = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  maxWidth: '120px', // Largeur maximale pour toutes les cellules
+  height: '50px', // Hauteur fixe pour toutes les cellules
+  };
+  
+  // Fonction de modèle pour les cellules avec ellipsis
+  const cellTemplate = (rowData :StationDTO, field: keyof StationDTO) => {
+  return (
+  <div style={cellStyle}>
+  {rowData[field]}
+  </div>
+  );
+  };
+
   useEffect(() => {
     checkToken();
   }, []);
@@ -205,11 +225,15 @@ const TableStation = () => {
         <TableContainer>
           <DataTable
             value={stations}
+            showGridlines
+            stripedRows
             paginator
             rows={10}
+            loading={loading}
+            // size="small"
             header={header}
             filters={filters}
-            filterDisplay="menu"
+            filterDisplay="row"
             globalFilterFields={[
               "ID",
               "name",
@@ -231,20 +255,25 @@ const TableStation = () => {
               field="_id"
               header="ID"
               sortable
+              //style={{ ...cellStyle, minWidth: '120px' }}
+              body={(rowData) => cellTemplate(rowData, '_id')}
               filterPlaceholder="Search by name"
             ></Column>
             <Column
               key="name"
               field="name"
               header="Nom"
+              //body={(rowData) => cellTemplate(rowData, 'name')}
               sortable
               filterPlaceholder="Search by name"
+              body={(rowData) => cellTemplate(rowData, 'name')}
             ></Column>
 
             <Column
               key="region"
               field="region"
               header="region"
+              body={(rowData) => cellTemplate(rowData, 'region')}
               sortable
               filterPlaceholder="Search by name"
             ></Column>
@@ -252,6 +281,7 @@ const TableStation = () => {
               key="district"
               field="district"
               header="district"
+              body={(rowData) => cellTemplate(rowData, 'district')}
               sortable
               filterPlaceholder="Search by name"
             ></Column>
@@ -259,6 +289,7 @@ const TableStation = () => {
               key="commune"
               field="commune"
               header="commune"
+              body={(rowData) => cellTemplate(rowData, 'commune')}
               sortable
               filterPlaceholder="Search by name"
             ></Column>
@@ -266,6 +297,7 @@ const TableStation = () => {
               key="fokontany"
               field="fokontany"
               header="fokontany"
+              body={(rowData) => cellTemplate(rowData, 'fokontany')}
               sortable
               filterPlaceholder="Search by name"
             ></Column>
@@ -273,6 +305,7 @@ const TableStation = () => {
               key="centre"
               field="centre"
               header="centre"
+              body={(rowData) => cellTemplate(rowData, 'centre')}
               sortable
               filterPlaceholder="Search by name"
             ></Column>
@@ -280,6 +313,7 @@ const TableStation = () => {
               key="code"
               field="code"
               header="code"
+              body={(rowData) => cellTemplate(rowData, 'code')}
               sortable
               filterPlaceholder="Search by name"
             ></Column>
@@ -287,6 +321,7 @@ const TableStation = () => {
               key="nbVoters"
               field="nbVoters"
               header="nbVoters"
+              body={(rowData) => cellTemplate(rowData, 'nbVoters')}
               sortable
               filterPlaceholder="Search by name"
             ></Column>
