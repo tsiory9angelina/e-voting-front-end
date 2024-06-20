@@ -111,7 +111,7 @@ function SideNav() {
           component={<Link to="/dashboard/candidate" />}
           icon={<NoteAddTwoToneIcon />}
         >
-          <Typography variant="body2">Candidats</Typography>
+          <Typography variant="body2">Candidat</Typography>
         </MenuItem>
         {/* </SubMenu> */}
         <MenuItem

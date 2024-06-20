@@ -30,8 +30,19 @@ function AppHeader() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const deleteLocalStorage =()=>{
+    if(localStorage.getItem("token")){
+      localStorage.removeItem("token");
+    }
+    if(localStorage.getItem("user")){
+      localStorage.removeItem("user");
+    }
+    
+  }
   const handleLogout = () => {
     setAnchorEl(null);
+    deleteLocalStorage()
     navigate("/");
   };
 

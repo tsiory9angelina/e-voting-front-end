@@ -44,6 +44,7 @@ const TableVoters = () => {
     useState<ExtendedVoterDTO | null>();
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [voters, setVoters] = useState<VoterDTO[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [filters, setFilters] = useState<any>({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -120,6 +121,7 @@ const TableVoters = () => {
             console.log(response);
             if (response) {
               setVoters(response);
+              setLoading(false);
             }
           }
         )
@@ -363,6 +365,22 @@ const TableVoters = () => {
     );
   };
 
+  // Style CSS pour les cellules avec ellipsis
+  const cellStyle = {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "120px", // Largeur maximale pour toutes les cellules
+    height: "50px", // Hauteur fixe pour toutes les cellules
+  };
+
+  // Fonction de modèle pour les cellules avec ellipsis
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const cellTemplate = (rowData: any, field: keyof ExtendedVoterDTO) => {
+    return <div style={cellStyle}>{rowData[field]}</div>;
+  };
+
+
   useEffect(() => {
     checkToken();
   }, []);
@@ -379,10 +397,13 @@ const TableVoters = () => {
           <DataTable
             value={voters}
             paginator
+            stripedRows
             rows={10}
             header={header}
+            loading={loading}
             filters={filters}
-            filterDisplay="menu"
+            scrollable  
+            filterDisplay="row"
             globalFilterFields={[
               "ID",
               "name",
@@ -401,13 +422,14 @@ const TableVoters = () => {
             stateStorage="session"
             stateKey="dt-state-demo-session"
             emptyMessage="Aucun  élécteur trouvé."
-            tableStyle={{ maxWidth: "500px" }}
+            //tableStyle={{ maxWidth: "500px" }}
           >
             <Column
               key="ID"
               field="_id"
               header="ID"
               sortable
+              body={(rowData) => cellTemplate(rowData, "_id")}
               filterPlaceholder="Search by name"
             ></Column>
             <Column
@@ -424,6 +446,7 @@ const TableVoters = () => {
               header="Nom"
               sortable
               filterPlaceholder="Search by name"
+              body={(rowData) => cellTemplate(rowData, "name")}
             ></Column>
             <Column
               key="firstname"
@@ -438,18 +461,21 @@ const TableVoters = () => {
               sortable
               filterPlaceholder="Search by name"
             ></Column>
-            {/* <Column
+            <Column
               key="birthLocation"
               field="birthLocation"
               header="Lieu de naissance"
               sortable
+              body={(rowData) => cellTemplate(rowData, "birthLocation")}
               filterPlaceholder="Search by name"
-            ></Column> */}
+            ></Column>
             <Column
               key="gender"
               field="gender"
               header="Sexe"
               sortable
+
+              body={(rowData) => cellTemplate(rowData, "gender")}
               filterPlaceholder="Search by name"
             ></Column>
             <Column
@@ -457,6 +483,7 @@ const TableVoters = () => {
               field="cin"
               header="CIN"
               sortable
+              body={(rowData) => cellTemplate(rowData, "cin")}
               filterPlaceholder="Search by name"
             ></Column>
             {/* <Column
@@ -478,6 +505,7 @@ const TableVoters = () => {
               field="address"
               header="address"
               sortable
+              body={(rowData) => cellTemplate(rowData, "address")}
               filterPlaceholder="Search by name"
             ></Column>
             <Column
@@ -485,6 +513,7 @@ const TableVoters = () => {
               field="email"
               header="Email"
               sortable
+              body={(rowData) => cellTemplate(rowData, "email")}
               filterPlaceholder="Search by name"
             ></Column>
             <Column

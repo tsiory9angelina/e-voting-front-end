@@ -23,6 +23,8 @@ import { FilterMatchMode } from "primereact/api";
 
 const TableCandidate = () => {
   const [token, setToken] = useState("");
+
+  const [loading, setLoading] = useState<boolean>(true);
   const [displayResponsiveUpdate, setDisplayResponsiveUpdate] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [rowDataSelected, setRowDataSelected] = useState<any | null>();
@@ -84,6 +86,7 @@ const TableCandidate = () => {
             console.log("-----Candidat LIst-------");
             if (response) {
               setCandidates(response || []);
+              setLoading(false);
             }
           }
         )
@@ -170,6 +173,21 @@ const TableCandidate = () => {
     }
   };
 
+  // Style CSS pour les cellules avec ellipsis
+  const cellStyle = {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "120px", // Largeur maximale pour toutes les cellules
+    height: "50px", // Hauteur fixe pour toutes les cellules
+  };
+
+  // Fonction de modèle pour les cellules avec ellipsis
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const cellTemplate = (rowData: any, field: keyof CandidateDTO) => {
+    return <div style={cellStyle}>{rowData[field]}</div>;
+  };
+
   useEffect(() => {
     checkToken();
   }, []);
@@ -216,12 +234,12 @@ const TableCandidate = () => {
           <DataTable
             value={candidates}
             paginator
+            stripedRows
             rows={10}
             header={header}
+            loading={loading}
             filters={filters}
-            filterDisplay="menu"
-            // stripedRows
-            //showGridlines
+            filterDisplay="row"
             globalFilterFields={[
               "ID",
               "name",
@@ -241,7 +259,7 @@ const TableCandidate = () => {
               field="_id"
               header="ID"
               sortable
-              // style={{ width: '10%' }}
+              body={(rowData) => cellTemplate(rowData, "_id")}
               filterPlaceholder="Search by name"
             ></Column>
             <Column
@@ -257,20 +275,24 @@ const TableCandidate = () => {
               field="name"
               header="Nom"
               sortable
+              body={(rowData) => cellTemplate(rowData, "name")}
               filterPlaceholder="Search by name"
             ></Column>
             <Column
               key="partyEntity"
               field="partyEntity"
               header="Parti politique"
-              filterPlaceholder="Search by name"
+              sortable
+              body={(rowData) => cellTemplate(rowData, "partyEntity")}
+              filterPlaceholder="Search by partyEntity"
             ></Column>
             <Column
               key="compaingLocation"
               field="compaingLocation"
               header="Siege"
               sortable
-              filterPlaceholder="Search by name"
+              body={(rowData) => cellTemplate(rowData, "compaingLocation")}
+              filterPlaceholder="Search by compaingLocation"
             ></Column>
             <Column
               key="dateBirth"
@@ -284,14 +306,16 @@ const TableCandidate = () => {
               field="cin"
               header="CIN"
               sortable
-              filterPlaceholder="Search by name"
+              body={(rowData) => cellTemplate(rowData, "cin")}
+              filterPlaceholder="Search by cin"
             ></Column>
             <Column
               key="birthLocation"
               field="birthLocation"
               header="Lieu de naissance"
               sortable
-              filterPlaceholder="Search by name"
+              body={(rowData) => cellTemplate(rowData, "birthLocation")}
+              filterPlaceholder="Search by birthLocation"
             ></Column>
             <Column
               key="action"
