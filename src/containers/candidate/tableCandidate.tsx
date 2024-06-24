@@ -62,7 +62,7 @@ const TableCandidate = () => {
 
         <Button
           label="Candidat"
-          style={{ marginLeft: "20px", backgroundColor: "#167845" }}
+          style={{ marginLeft: "20px", backgroundColor: "#167845" , borderColor: "#167845" }}
           icon="pi pi-plus"
           onClick={() => navigate("/dashboard/candidate/create")}
         />
@@ -125,19 +125,25 @@ const TableCandidate = () => {
       <React.Fragment>
         <Button
           icon="pi pi-file"
-          className="p-button-rounded p-button-success mr-2 ms-2"
+          className="p-button-rounded p-button-success"
+          style={{ marginRight: '0.2em' }}
           onClick={() => updateCandidate(rowData, "view")}
         />
         <Button
           icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2 ms-2"
+          className="p-button-rounded p-button-info"
+          style={{ marginRight: '0.2em' }}
+          //severity="danger"
+          // outlined severity="danger"
           onClick={() => {
             updateCandidate(rowData, "update");
           }}
         />
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-warning ms-2"
+          className="p-button-rounded p-button-warning"
+          style={{ marginRight: '0.2em' }}
+          severity="danger"
           onClick={() => onClickDeleteCandidate(rowData)}
         />
       </React.Fragment>
@@ -322,7 +328,7 @@ const TableCandidate = () => {
               header="Action"
               body={actionTemplateCandidat}
               exportable={false}
-              style={{ minWidth: "8rem" }}
+              style={{ minWidth: "12rem" }}
             ></Column>
           </DataTable>
         </TableContainer>

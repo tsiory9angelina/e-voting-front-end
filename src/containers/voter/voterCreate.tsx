@@ -24,6 +24,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { createFilterOptions } from "@mui/material/Autocomplete";
+//import { borderBottomStyle } from "html2canvas/dist/types/css/property-descriptors/border-style";
+import CustomTextField from "../../config/customTextField";
+import { sharedFormControlStyles } from "../../config/sharedFormControlStyles";
 
 const VoterCreate = () => {
   const navigate = useNavigate();
@@ -147,40 +150,77 @@ const VoterCreate = () => {
             flexDirection: "column",
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ color: 'green !important', mb: 4 }}>
             Electeur
           </Typography>
           <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
-                <TextField
-                  id="nom"
+                <CustomTextField label="Nom" name="nom"  value={name}
+                  onChange={(e :React.ChangeEvent<HTMLInputElement>) => {
+                    setName(e.target.value);
+                  }}/>
+                {/* <TextField
+                  // id="nom"
+                  id="standard-basic"
                   fullWidth
                   required
                   label="Nom"
                   name="nom"
-                  variant="filled"
+                  variant="standard"
+                    sx={{
+                      '& label': { // Couleur du label par défaut
+                        color: 'black',
+                        },
+                        '& label.Mui-focused': { // Couleur du label lorsqu'il est focalisé
+                        color: 'grey',
+                        },
+                      '& .MuiInput-underline:before': { // Bordure inférieure par défaut
+                      borderBottomColor: '#17b359',
+                      },
+                      '& .MuiInput-underline:hover:not(.Mui-disabled):before': { // Bordure inférieure au survol
+                      borderBottomColor: '#17b359',
+                      },
+                      '& .MuiInput-underline:after': { // Bordure inférieure lorsqu'elle est active
+                      borderBottomColor: '#17b359',
+                      },
+                      '& .MuiInputBase-input': { // Couleur du texte
+                      color: 'rgba(0, 0, 0, 0.87)', // Appliquez la couleur de texte que vous souhaitez
+                      },
+                      '& .MuiInput-underline.Mui-error:after': { // Bordure inférieure en cas d'erreur
+                      borderBottomColor: 'red',
+                      },
+                      '& .MuiInput-underline.Mui-disabled:before': { // Bordure inférieure si désactivé
+                      borderBottomStyle: 'dotted',
+                      }
+                      }}
+                  //variant="filled"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
-                />
+                /> */}
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField
-                  id="prenom"
+              <CustomTextField label="Prénom(s)" name="prenom" value={firstname}
+                  onChange={(e :React.ChangeEvent<HTMLInputElement>) => {
+                    setFirstName(e.target.value);
+                  }}/>
+                {/* <TextField
+                id="standard-basic"
                   fullWidth
                   required
                   label="Prénom(s)"
-                  variant="filled"
+                  name="prenom"
+                  variant="standard"
                   value={firstname}
                   onChange={(e) => {
                     setFirstName(e.target.value);
                   }}
-                />
+                /> */}
               </Grid>
               <Grid item xs={12} md={6}>
-                <FormControl variant="filled" fullWidth required>
+                <FormControl variant="standard" fullWidth required sx={sharedFormControlStyles}>
                   <InputLabel id="gender-label">Sexe</InputLabel>
                   <Select
                     labelId="gender-label"
@@ -203,11 +243,12 @@ const VoterCreate = () => {
                   required
                   label="Email"
                   name="email"
-                  variant="filled"
+                  variant="standard"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
+                  sx={sharedFormControlStyles}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -218,9 +259,10 @@ const VoterCreate = () => {
                     onChange={(newValue) => setBirthDate(newValue)}
                     slotProps={{
                       textField: {
-                        variant: "filled",
+                        variant:"standard",
                         required: true,
                         fullWidth: true,
+                        sx: sharedFormControlStyles,
                         // Ajoutez d'autres props ici si nécessaire
                       },
                     }}
@@ -233,7 +275,8 @@ const VoterCreate = () => {
                   fullWidth
                   required
                   label="Lieu de naissance"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   value={birthLocation}
                   onChange={(e) => {
                     setBirthLocation(e.target.value);
@@ -247,8 +290,9 @@ const VoterCreate = () => {
                   required
                   label="CIN"
                   name="Cin"
-                  variant="filled"
+                  variant="standard"
                   value={cin}
+                  sx={sharedFormControlStyles}
                   onChange={(e) => {
                     setCin(e.target.value);
                   }}
@@ -262,9 +306,10 @@ const VoterCreate = () => {
                     onChange={(newValue) => setDateCin(newValue)}
                     slotProps={{
                       textField: {
-                        variant: "filled",
+                        variant:"standard",
                         required: true,
                         fullWidth: true,
+                        sx: sharedFormControlStyles,
                         // Ajoutez d'autres props ici si nécessaire
                       },
                     }}
@@ -277,8 +322,9 @@ const VoterCreate = () => {
                   fullWidth
                   required
                   label="Lieu de délivrance CIN"
-                  variant="filled"
+                  variant="standard"
                   value={locationCin}
+                  sx={sharedFormControlStyles}
                   onChange={(e) => {
                     setLocationCin(e.target.value);
                   }}
@@ -322,8 +368,9 @@ const VoterCreate = () => {
                     <TextField
                       {...params}
                       label="Bureau de vote"
-                      variant="filled"
+                      variant="standard"
                       required
+                      sx={sharedFormControlStyles}
                     />
                   )}
                 />
@@ -335,7 +382,8 @@ const VoterCreate = () => {
                   required
                   label="Adresse"
                   name="address"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   value={address}
                   onChange={(e) => {
                     setAddress(e.target.value);
@@ -345,7 +393,7 @@ const VoterCreate = () => {
             </Grid>
             <Button
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, background: 'linear-gradient(98deg, #57B77C, #0a713f 94%)' }}
               onClick={() => {
                 createVoter();
               }}

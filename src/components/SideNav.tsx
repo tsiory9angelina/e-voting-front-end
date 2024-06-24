@@ -42,7 +42,10 @@ function SideNav() {
         height: "100%",
         top: "auto",
         boxShadow: "1px 1px 0px 1px rgba(0, 0, 0, 0.25)",
-        background: "green",
+        //background: "green",
+        background: "linear-gradient(98deg, rgba(95, 230, 164, 1) , rgba(158, 158, 158, 1) 94%)",
+        //background: "linear-gradient(98deg, rgba(158, 158, 158, 1) 50%, rgba(95, 230, 164, 1) 100%)",
+        //background: "linear-gradient(98deg, rgba(112, 192, 119, 1) 20%, rgba(101, 176, 105, 1) 50%, rgba(147, 198, 147, 1) 100%)",
         color: "#1e4620",
       }}
       breakPoint="md"
@@ -60,7 +63,8 @@ function SideNav() {
                 ? "0px 4px 8px -4px rgba(58, 53, 65, 0.42)"
                 : undefined,
               backgroundImage: active
-                ? "linear-gradient(98deg, #89B77C, #0a713f 94%)"
+                ? "linear-gradient(98deg, #57B77C, #0a713f 94%)"
+                //? "linear-gradient(98deg, #89B77C, #0a713f 94%)"
                 : undefined,
               backgroundColor: active
                 ? theme.palette.secondary.dark

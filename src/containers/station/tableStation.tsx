@@ -129,19 +129,23 @@ const TableStation = () => {
       <React.Fragment>
         <Button
           icon="pi pi-file"
-          className="p-button-rounded p-button-success mr-2 ms-2"
+          className="p-button-rounded p-button-success"
+          style={{ marginRight: '0.2em' }}
           onClick={() => updateStation(rowData, "view")}
         />
         <Button
           icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2 ms-2"
+          className="p-button-rounded p-button-info"
+          style={{ marginRight: '0.2em' }}
           onClick={() => {
             updateStation(rowData, "update");
           }}
         />
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-warning ms-2"
+          className="p-button-rounded"
+          severity="danger"
+          style={{ marginRight: '0.2em' }}
           onClick={() => onClickDeleteStation(rowData)}
         />
       </React.Fragment>

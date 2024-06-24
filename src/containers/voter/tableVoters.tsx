@@ -140,25 +140,30 @@ const TableVoters = () => {
       <React.Fragment>
         <Button
           icon="pi pi-file"
-          className="p-button-rounded p-button-success mr-2 ms-2"
+          className="p-button-rounded p-button-success"
+          style={{ marginRight: '0.2em', marginTop : '0.2em' }}
           onClick={() => updateVoter(rowData, "view")}
         />
         <Button
           icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2 ms-2"
+          className="p-button-rounded p-button-info"
+          style={{ marginRight: '0.2em', marginTop : '0.2em' }}
           onClick={() => {
             updateVoter(rowData, "update");
           }}
         />
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-warning ms-2"
-          // onClick={() => onClickDeleteProduct("center", rowData)}
+          className="p-button-rounded"
+          severity="danger"
+          style={{ marginRight: '0.2em', marginTop : '0.2em' }}
           onClick={() => onClickDeleteDialog(rowData)}
         />
         <Button
           icon="pi pi-print"
-          className="p-button-rounded p-button-primary ms-2"
+          className="p-button-rounded p-button"
+          severity="secondary"
+          style={{ marginRight: '0.2em', marginTop : '0.2em' }}
           // onClick={() => onClickDeleteProduct("center", rowData)}
           onClick={() => saveCardPDF(rowData)}
         />
