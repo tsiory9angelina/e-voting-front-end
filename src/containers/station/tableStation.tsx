@@ -66,7 +66,7 @@ const TableStation = () => {
 
         <Button
           label="Bureau de vote"
-          style={{ marginLeft: "20px", backgroundColor: "#167845" }}
+          style={{ marginLeft: "20px", backgroundColor: "#167845", borderColor: "#167845"  }}
           icon="pi pi-plus"
           onClick={() => navigate("/dashboard/station/create")}
         />

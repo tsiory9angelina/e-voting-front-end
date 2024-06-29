@@ -46,8 +46,14 @@ const StationCreate = () => {
   const formatDataByRemovingEmptyRecords = (data: StationDTO[]) => {
     // Filtrer les enregistrements où la propriété 'name' est vide
     //return data.filter((item) => item.name !== "");
-    return data.filter((item: StationDTO) => item.name !== "" && item.region !== "" && item.district !== "" && item.commune !== "");
-    };
+    return data.filter(
+      (item: StationDTO) =>
+        item.name !== "" &&
+        item.region !== "" &&
+        item.district !== "" &&
+        item.commune !== ""
+    );
+  };
 
   const createStation = () => {
     if (excelFile) {
@@ -74,37 +80,37 @@ const StationCreate = () => {
           code: row[6] || "",
           nbVoters: row[8] || 0,
         }));
-        console.log("Avant ====> ")
+        console.log("Avant ====> ");
         console.log(formattedData);
 
         // Transformer en format payload voulu
-        
-        
+
         if (token !== "") {
-          
-          
-          formattedData = formatDataByRemovingEmptyRecords(formattedData)
-          console.log("Apres ====> "+token)
+          formattedData = formatDataByRemovingEmptyRecords(formattedData);
+          console.log("Apres ====> " + token);
           console.log(formattedData);
           const stationsDataListFormatted = {
-            stations: formattedData
-            };
-        StationApplicatif.createStationByImportData(stationsDataListFormatted, token)
-          .then((res) => {
-            console.log(res);
-            console.log("Bureau de vote ajouté avec succès");
-            
-            toast.success("Bureau de vote ajouté avec succès", {
-              position: "top-right",
+            stations: formattedData,
+          };
+          StationApplicatif.createStationByImportData(
+            stationsDataListFormatted,
+            token
+          )
+            .then((res) => {
+              console.log(res);
+              console.log("Bureau de vote ajouté avec succès");
+
+              toast.success("Bureau de vote ajouté avec succès", {
+                position: "top-right",
+              });
+              setTimeout(() => {
+                navigate("/dashboard/station");
+              }, 2000); // Attendre 2000 millisecondes (2 secondes)
+            })
+            .catch((err) => {
+              console.log(err.response.data);
             });
-            setTimeout(() => {
-              navigate("/dashboard/station");
-            }, 2000); // Attendre 2000 millisecondes (2 secondes)
-          })
-          .catch((err) => {
-            console.log(err.response.data);
-          });
-      }
+        }
       };
       reader.readAsBinaryString(excelFile);
     } else {
@@ -121,13 +127,13 @@ const StationCreate = () => {
         nbVoters: nbVoters,
       };
       console.log(station);
-      
+
       if (token !== "" && token) {
         StationApplicatif.createStation(station, token)
           .then((res) => {
             console.log(res);
             console.log("Bureau de vote ajouté avec succès");
-            
+
             toast.success("Bureau de vote ajouté avec succès", {
               position: "top-right",
             });
@@ -167,7 +173,7 @@ const StationCreate = () => {
       setExcelFile(selectedFile);
       setIsFileSelected(true);
       setFileName(selectedFile.name); // Utilisation de la variable file
-      }
+    }
   };
 
   // const importDocument = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -246,7 +252,7 @@ const StationCreate = () => {
                   label="Nom du bureau de vote"
                   name="nom"
                   variant="standard"
-                    sx={sharedFormControlStyles}
+                  sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={nameStation}
                   onChange={(e) => {
@@ -363,60 +369,47 @@ const StationCreate = () => {
                 />
               </Grid>
 
-              <Grid item>
-                <Button
-                  variant="contained"
-                  // sx={{ mt: 3, mb: 2 }}
-                  sx={{
-                    background:
-                      "linear-gradient(98deg, #57B77C, #0a713f 94%)",
-                  }}
-                  onClick={() => {
-                    createStation();
-                  }}
-                >
-                  Enregister
-                </Button>
-              </Grid>
-              {/* <Button
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={() => {
-                importDocument();
-              }}
-            >
-              Importer
-            </Button> */}
-              {/*<input
-              type="file"
-              accept=".xlsx, .xls"
-              onChange={handleFileChange}
-          />*/}
-              <Grid item>
-                <Button
-                  variant="contained"
-                  component="label"
-                  color="warning"
-                  onClick={handleFileButtonClick}
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Importer un fichier
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".xlsx, .xls"
-                    onChange={handleFileChange}
-                    hidden
-                  />
-                </Button>
-              </Grid>
-              {isFileSelected && (
+              <Grid container spacing={2} justifyContent="flex-end">
                 <Grid item>
-                  <Typography variant="subtitle1">
-                    Fichier sélectionné : {fileName}
-                  </Typography>
+                  <Button
+                    variant="contained"
+                    sx={{mt: 3, mb: 2,
+                      background:
+                        "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                    }}
+                    onClick={() => {
+                      createStation();
+                    }}
+                  >
+                    Enregister
+                  </Button>
                 </Grid>
-              )}
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    component="label"
+                    color="info"
+                    onClick={handleFileButtonClick}
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Importer un fichier
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".xlsx, .xls"
+                      onChange={handleFileChange}
+                      hidden
+                    />
+                  </Button>
+                </Grid>
+                {isFileSelected && (
+                  <Grid item>
+                    <Typography variant="subtitle1">
+                      Fichier sélectionné : {fileName}
+                    </Typography>
+                  </Grid>
+                )}
+              </Grid>
             </Grid>
           </Box>
         </Box>

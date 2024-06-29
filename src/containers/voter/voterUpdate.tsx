@@ -386,7 +386,12 @@ const VoterUpdate = () => {
                       setGender(e.target.value);
                     }}
                   /> */}
-                  <FormControl variant="standard" fullWidth required sx={sharedFormControlStyles}>
+                  <FormControl
+                    variant="standard"
+                    fullWidth
+                    required
+                    sx={sharedFormControlStyles}
+                  >
                     <InputLabel id="gender-label">Sexe</InputLabel>
                     <Select
                       labelId="gender-label"
@@ -512,26 +517,46 @@ const VoterUpdate = () => {
                   />
                 </Grid>
               </Grid>
-              <Box
+              {/* <Box
                 sx={{
                   display: "flex",
                   justifyContent: "flex-end", // This will align the button to the right
                   mt: 3, // Adjust margin top as needed
                   mb: 2, // Adjust margin bottom as needed
                 }}
-              >
-              <Button
-                variant="contained"
-                sx={{
-                  background: "linear-gradient(98deg, #57B77C, #0a713f 94%)",
-                }}
-                onClick={() => {
-                  updateVoter();
-                }}
-              >
-                Enregister
-              </Button>
-                </Box>
+              > */}
+              <Grid container spacing={2} justifyContent="flex-end">
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    //color="info"
+                    sx={{ mt: 3, mb: 2, background: "#808080" }}
+                    onClick={() => {
+                      navigate("/dashboard/voter");
+                    }}
+                  >
+                    Retour
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      mt: 3,
+                      mb: 2,
+                      background:
+                        "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                    }}
+                    onClick={() => {
+                      updateVoter();
+                    }}
+                  >
+                    Enregister
+                  </Button>
+                </Grid>
+              </Grid>
+
+              {/* </Box> */}
             </Box>
           </Box>
           <ToastContainer />

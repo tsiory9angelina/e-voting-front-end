@@ -340,8 +340,8 @@ const VoterCreate = () => {
                   required
                   label="Lieu de délivrance CIN"
                   variant="standard"
-                  value={locationCin}
                   sx={sharedFormControlStyles}
+                  value={locationCin}
                   onChange={(e) => {
                     setLocationCin(e.target.value);
                   }}
@@ -408,39 +408,34 @@ const VoterCreate = () => {
                 />
               </Grid>
             </Grid>
-              {/* <Grid item xs={12} md={6}> */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end", // This will align the button to the right
-                    mt: 3, // Adjust margin top as needed
-                    mb: 2, // Adjust margin bottom as needed
+            <Grid container spacing={2} justifyContent="flex-end">
+              <Grid item>
+                <Button
+                  variant="contained"
+                  //color="info"
+                  sx={{ mt: 3, mb: 2, background: "#808080" }}
+                  onClick={() => {
+                    navigate("/dashboard/voter");
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    sx={{
-                      background:
-                        "linear-gradient(98deg, #57B77C, #0a713f 94%)",
-                    }}
-                    onClick={() => {
-                      createVoter();
-                    }}
-                  >
-                    Enregister
-                  </Button>
-                  
-                </Box>
-              {/* </Grid> */}
-            {/* <Button
-              variant="contained"
-              sx={{ mt: 3, mb: 2, background: 'linear-gradient(98deg, #57B77C, #0a713f 94%)' }}
-              onClick={() => {
-                createVoter();
-              }}
-            >
-              Enregister
-            </Button> */}
+                  Retour
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  sx={{
+                    mt: 3, mb: 2,
+                    background: "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                  }}
+                  onClick={() => {
+                    createVoter();
+                  }}
+                >
+                  Enregister
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
         <ToastContainer />

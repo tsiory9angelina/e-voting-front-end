@@ -231,73 +231,79 @@ const CandidateUpdate = () => {
                 </Grid>
                 {/* Partie droite pour les autres champs de saisie */}
                 <Grid item xs={12} sm={12} md={7}>
-                  {/* Espace ajouté ici */}
-                  <Grid container spacing={2} direction="column">
-                    <Grid item xs={12}>
-                      <TextField
-                        id="nom"
-                        fullWidth
-                        disabled
-                        label="Nom"
-                        name="nom"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={candidate?.name}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="prenom"
-                        fullWidth
-                        disabled
-                        label="Prénom(s)"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        //value={firstname}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label="Date de naissance"
+                  <Box sx={{ my: 4, ml: 4 }}>
+                    {/* Espace ajouté ici */}
+                    <Grid container spacing={2} direction="column">
+                      <Grid item xs={12}>
+                        <TextField
+                          id="nom"
+                          fullWidth
                           disabled
-                          value={dayjs(candidate?.dateBirth || null)}
+                          label="Nom"
+                          name="nom"
+                          variant="standard"
                           sx={sharedFormControlStyles}
-                          slotProps={{
-                            textField: {
-                              variant: "standard",
-                              fullWidth: true,
-
-                              // Ajoutez d'autres props ici si nécessaire
-                            },
-                          }}
+                          //sx={{ width: "100%", maxWidth: "600px" }}
+                          value={candidate?.name}
                         />
-                      </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="fbirthLocation"
-                        fullWidth
-                        disabled
-                        label="Lieu de naissance"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={candidate?.birthLocation}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="cin"
-                        fullWidth
-                        disabled
-                        label="CIN"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={candidate?.cin}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      {/* <TextField
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="prenom"
+                          fullWidth
+                          disabled
+                          label="Prénom(s)"
+                          variant="standard"
+                          sx={sharedFormControlStyles}
+                          //sx={{ width: "100%", maxWidth: "600px" }}
+                          //value={firstname}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="Date de naissance"
+                            disabled
+                            value={dayjs(candidate?.dateBirth || null)}
+                            sx={sharedFormControlStyles}
+                            slotProps={{
+                              textField: {
+                                variant: "standard",
+                                fullWidth: true,
+                                //sx: { width: "100%", maxWidth: "600px" },
+                                // Ajoutez d'autres props ici si nécessaire
+                              },
+                            }}
+                          />
+                        </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="fbirthLocation"
+                          fullWidth
+                          disabled
+                          label="Lieu de naissance"
+                          variant="standard"
+                          sx={sharedFormControlStyles}
+                          value={candidate?.birthLocation}
+                          //sx={{ width: "100%", maxWidth: "600px" }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="cin"
+                          fullWidth
+                          disabled
+                          label="CIN"
+                          name="Cin"
+                          variant="standard"
+                          sx={sharedFormControlStyles}
+                          value={candidate?.cin}
+                          //sx={{ width: "100%", maxWidth: "600px" }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        {/* <TextField
                           id="dateCin"
                           fullWidth
                           disabled
@@ -307,81 +313,75 @@ const CandidateUpdate = () => {
                           value={candidate?.dateCin}
                           sx={{ width: "100%", maxWidth: "600px" }}
                         />*/}
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label="Date de délivrance CIN"
-                          value={dayjs(candidate?.dateCin || null)}
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="Date de délivrance CIN"
+                            value={dayjs(candidate?.dateCin || null)}
+                            disabled
+                            sx={sharedFormControlStyles}
+                            slotProps={{
+                              textField: {
+                                variant: "standard",
+                                fullWidth: true,
+                                //sx: { width: "100%", maxWidth: "600px" },
+                                // Ajoutez d'autres props ici si nécessaire
+                              },
+                            }}
+                          />
+                        </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="locationCin"
+                          fullWidth
                           disabled
+                          label="Lieu de délivrance CIN"
+                          variant="standard"
                           sx={sharedFormControlStyles}
-                          slotProps={{
-                            textField: {
-                              variant: "standard",
-                              fullWidth: true,
-
-                              // Ajoutez d'autres props ici si nécessaire
-                            },
-                          }}
+                          value={candidate?.locationCin}
+                          //sx={{ width: "100%", maxWidth: "600px" }}
                         />
-                      </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="partyEntity"
+                          fullWidth
+                          disabled
+                          label="Partie Politique"
+                          variant="standard"
+                          sx={sharedFormControlStyles}
+                          //sx={{ width: "100%", maxWidth: "600px" }}
+                          value={candidate?.partyEntity}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="compaignStation"
+                          fullWidth
+                          disabled
+                          label="Siège"
+                          variant="standard"
+                          sx={sharedFormControlStyles}
+                          //sx={{ width: "100%", maxWidth: "600px" }}
+                          value={candidate?.compaingLocation}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="description"
+                          fullWidth
+                          disabled
+                          label="Description"
+                          variant="standard"
+                          sx={sharedFormControlStyles}
+                          //sx={{ width: "100%", maxWidth: "600px" }}
+                          value={candidate?.description}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="locationCin"
-                        fullWidth
-                        disabled
-                        label="Lieu de délivrance CIN"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={candidate?.locationCin}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="partyEntity"
-                        fullWidth
-                        disabled
-                        label="Partie Politique"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={candidate?.partyEntity}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="compaignStation"
-                        fullWidth
-                        disabled
-                        label="Siège"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={candidate?.compaingLocation}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="description"
-                        fullWidth
-                        disabled
-                        label="Description"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={candidate?.description}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid container spacing={2} justifyContent="flex-end">
-                    <Grid item>
-                      <Button
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2, background: "#808080" }}
-                        onClick={() => {
-                          navigate("/dashboard/candidate");
-                        }}
-                      >
-                        Retour
-                      </Button>
-                    </Grid>
-                  </Grid>
+                  </Box>
+                 
+                  
                 </Grid>
               </Grid>
             </Box>
@@ -477,176 +477,169 @@ const CandidateUpdate = () => {
                 </Grid>
                 {/* Partie droite pour les autres champs de saisie */}
                 <Grid item xs={12} sm={12} md={7}>
-                  {/* Espace ajouté ici */}
-                  <Grid container spacing={2} direction="column">
-                    <Grid item xs={12}>
-                      <TextField
-                        id="nom"
-                        fullWidth
-                        required
-                        label="Nom"
-                        name="nom"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="prenom"
-                        fullWidth
-                        required
-                        label="Prénom(s)"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        //value={firstname}
-                        //onChange={(e) => {
-                        //setName(e.target.value);
-                        //}}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label="Date de naissance"
-                          value={dateBirth}
-                          onChange={(newValue) => setDatebirth(newValue)}
-                          sx={sharedFormControlStyles}
-                          slotProps={{
-                            textField: {
-                              variant: "standard",
-                              required: true,
-                              fullWidth: true,
-                              // Ajoutez d'autres props ici si nécessaire
-                            },
+                  <Box sx={{ my: 4, ml: 4 }}>
+                    {/* Espace ajouté ici */}
+                    <Grid container spacing={2} direction="column">
+                      <Grid item xs={12}>
+                        <TextField
+                          id="nom"
+                          fullWidth
+                          required
+                          label="Nom"
+                          name="nom"
+                          variant="filled"
+                          sx={{ width: "100%", maxWidth: "600px" }}
+                          value={name}
+                          onChange={(e) => {
+                            setName(e.target.value);
                           }}
                         />
-                      </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="fbirthLocation"
-                        fullWidth
-                        required
-                        label="Lieu de naissance"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={birthLocation}
-                        onChange={(e) => {
-                          setBirthLocation(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="cin"
-                        fullWidth
-                        required
-                        label="CIN"
-                        name="Cin"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={cin}
-                        onChange={(e) => {
-                          setCin(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label="Date de délivrance CIN"
-                          value={dateCin}
-                          onChange={(newValue) => setDateCin(newValue)}
-                          sx={sharedFormControlStyles}
-                          slotProps={{
-                            textField: {
-                              variant: "standard",
-                              required: true,
-                              fullWidth: true,
-                            },
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="prenom"
+                          fullWidth
+                          required
+                          label="Prénom(s)"
+                          variant="filled"
+                          sx={{ width: "100%", maxWidth: "600px" }}
+                          //value={firstname}
+                          //onChange={(e) => {
+                          //setName(e.target.value);
+                          //}}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="Date de naissance"
+                            value={dateBirth}
+                            onChange={(newValue) => setDatebirth(newValue)}
+                            slotProps={{
+                              textField: {
+                                variant: "filled",
+                                required: true,
+                                fullWidth: true,
+                                sx: { width: "100%", maxWidth: "600px" },
+                                // Ajoutez d'autres props ici si nécessaire
+                              },
+                            }}
+                          />
+                        </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="fbirthLocation"
+                          fullWidth
+                          required
+                          label="Lieu de naissance"
+                          variant="filled"
+                          value={birthLocation}
+                          onChange={(e) => {
+                            setBirthLocation(e.target.value);
+                          }}
+                          sx={{ width: "100%", maxWidth: "600px" }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="cin"
+                          fullWidth
+                          required
+                          label="CIN"
+                          name="Cin"
+                          variant="filled"
+                          value={cin}
+                          onChange={(e) => {
+                            setCin(e.target.value);
+                          }}
+                          sx={{ width: "100%", maxWidth: "600px" }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="Date de délivrance CIN"
+                            value={dateCin}
+                            onChange={(newValue) => setDateCin(newValue)}
+                            slotProps={{
+                              textField: {
+                                variant: "filled",
+                                required: true,
+                                fullWidth: true,
+                                sx: { width: "100%", maxWidth: "600px" },
+                              },
+                            }}
+                          />
+                        </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="locationCin"
+                          fullWidth
+                          required
+                          label="Lieu de délivrance CIN"
+                          variant="filled"
+                          value={locationCin}
+                          onChange={(e) => {
+                            setLocationCin(e.target.value);
+                          }}
+                          sx={{ width: "100%", maxWidth: "600px" }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="partyEntity"
+                          fullWidth
+                          required
+                          label="Partie Politique"
+                          variant="filled"
+                          sx={{ width: "100%", maxWidth: "600px" }}
+                          value={partyEntity}
+                          onChange={(e) => {
+                            setPartyEntity(e.target.value);
                           }}
                         />
-                      </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="compaignStation"
+                          fullWidth
+                          required
+                          label="Siège"
+                          variant="filled"
+                          sx={{ width: "100%", maxWidth: "600px" }}
+                          value={compaingLocation}
+                          onChange={(e) => {
+                            setCompaingLocation(e.target.value);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="description"
+                          fullWidth
+                          required
+                          label="Description"
+                          variant="filled"
+                          sx={{ width: "100%", maxWidth: "600px" }}
+                          value={description}
+                          onChange={(e) => {
+                            setDescription(e.target.value);
+                          }}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="locationCin"
-                        fullWidth
-                        required
-                        label="Lieu de délivrance CIN"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={locationCin}
-                        onChange={(e) => {
-                          setLocationCin(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="partyEntity"
-                        fullWidth
-                        required
-                        label="Partie Politique"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={partyEntity}
-                        onChange={(e) => {
-                          setPartyEntity(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="compaignStation"
-                        fullWidth
-                        required
-                        label="Siège"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={compaingLocation}
-                        onChange={(e) => {
-                          setCompaingLocation(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="description"
-                        fullWidth
-                        required
-                        label="Description"
-                        variant="standard"
-                        sx={sharedFormControlStyles}
-                        value={description}
-                        onChange={(e) => {
-                          setDescription(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid container spacing={2} justifyContent="flex-end">
-                    <Grid item>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          mt: 3,
-                          mb: 2,
-                          background:
-                            "linear-gradient(98deg, #57B77C, #0a713f 94%)",
-                        }}
-                        onClick={() => {
-                          updateCandidate();
-                        }}
-                      >
-                        Modifier
-                      </Button>
-                    </Grid>
-                  </Grid>
+                  </Box>
+                  <Button
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={() => {
+                      updateCandidate();
+                    }}
+                  >
+                    Modifier
+                  </Button>
                 </Grid>
               </Grid>
             </Box>

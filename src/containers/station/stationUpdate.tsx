@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import StationDTO from "../../data/dto/station.dto";
+import { sharedFormControlStyles } from "../../config/sharedFormControlStyles";
 
 const StationUpdate = () => {
   const navigate = useNavigate();
@@ -129,7 +130,8 @@ const StationUpdate = () => {
                       fullWidth
                       label="Nom du bureau de vote"
                       name="nom"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={name}
                       disabled
                       //   onChange={(e) => {
@@ -143,7 +145,8 @@ const StationUpdate = () => {
                       fullWidth
                       disabled
                       label="Region"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={region}
                       onChange={(e) => {
                         setRegion(e.target.value);
@@ -158,7 +161,8 @@ const StationUpdate = () => {
                       disabled
                       label="District"
                       name="district"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={district}
                       onChange={(e) => {
                         setDistrict(e.target.value);
@@ -171,7 +175,8 @@ const StationUpdate = () => {
                       fullWidth
                       disabled
                       label="Commune"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={commune}
                       onChange={(e) => {
                         setCommune(e.target.value);
@@ -185,7 +190,8 @@ const StationUpdate = () => {
                       disabled
                       label="Fokontany"
                       name="nom"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={fokontany}
                       onChange={(e) => {
                         setFokontany(e.target.value);
@@ -198,7 +204,8 @@ const StationUpdate = () => {
                       fullWidth
                       disabled
                       label="Centre"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={centre}
                       onChange={(e) => {
                         setCentre(e.target.value);
@@ -212,7 +219,8 @@ const StationUpdate = () => {
                       disabled
                       label="Code"
                       name="nom"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={code}
                       onChange={(e) => {
                         setCode(e.target.value);
@@ -225,7 +233,8 @@ const StationUpdate = () => {
                       fullWidth
                       disabled
                       label="Nombre d'élécteur"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={nbVoters}
                       onChange={(e) => {
                         setNbVoters(e.target.value);
@@ -233,15 +242,27 @@ const StationUpdate = () => {
                     />
                   </Grid>
                 </Grid>
-                <Button
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => {
-                    navigate("/dashboard/station");
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end", // This will align the button to the right
+                    mt: 3, // Adjust margin top as needed
+                    mb: 2, // Adjust margin bottom as needed
                   }}
                 >
-                  Retour
-                </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      background:
+                        "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                    }}
+                    onClick={() => {
+                      navigate("/dashboard/station");
+                    }}
+                  >
+                    Retour
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </Container>
@@ -281,7 +302,8 @@ const StationUpdate = () => {
                       required
                       label="Nom du bureau de vote"
                       name="nom"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={name}
                       onChange={(e) => {
                         setName(e.target.value);
@@ -294,7 +316,8 @@ const StationUpdate = () => {
                       fullWidth
                       required
                       label="Region"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={region}
                       onChange={(e) => {
                         setRegion(e.target.value);
@@ -308,7 +331,8 @@ const StationUpdate = () => {
                       required
                       label="District"
                       name="district"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={district}
                       onChange={(e) => {
                         setDistrict(e.target.value);
@@ -321,7 +345,8 @@ const StationUpdate = () => {
                       fullWidth
                       required
                       label="Commune"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={commune}
                       onChange={(e) => {
                         setCommune(e.target.value);
@@ -335,7 +360,8 @@ const StationUpdate = () => {
                       required
                       label="Fokontany"
                       name="nom"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={fokontany}
                       onChange={(e) => {
                         setFokontany(e.target.value);
@@ -348,7 +374,8 @@ const StationUpdate = () => {
                       fullWidth
                       required
                       label="Centre"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={centre}
                       onChange={(e) => {
                         setCentre(e.target.value);
@@ -362,7 +389,8 @@ const StationUpdate = () => {
                       required
                       label="Code"
                       name="nom"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={code}
                       onChange={(e) => {
                         setCode(e.target.value);
@@ -375,7 +403,8 @@ const StationUpdate = () => {
                       fullWidth
                       required
                       label="Nombre d'élécteur"
-                      variant="filled"
+                      variant="standard"
+                      sx={sharedFormControlStyles}
                       value={nbVoters}
                       onChange={(e) => {
                         setNbVoters(e.target.value);
@@ -383,27 +412,35 @@ const StationUpdate = () => {
                     />
                   </Grid>
                 </Grid>
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="warning"
-                    sx={{ mt: 3, mb: 2, mr: 2 }}
-                    onClick={() => {
-                      navigate("/dashboard/station");
-                    }}
-                  >
-                    Retour
-                  </Button>
-                
-                  <Button
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={() => {
-                      updateStation();
-                    }}
-                  >
-                    Enregistrer
-                  </Button>
+                <Grid container spacing={2} justifyContent="flex-end">
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      //color="info"
+                      sx={{ mt: 3, mb: 2, 
+                        background:
+                        "#808080", }}
+                      onClick={() => {
+                        navigate("/dashboard/station");
+                      }}
+                    >
+                      Retour
+                    </Button>
+                  </Grid>
+
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 , 
+                        background:
+                        "linear-gradient(98deg, #57B77C, #0a713f 94%)",}}
+                      onClick={() => {
+                        updateStation();
+                      }}
+                    >
+                      Enregistrer
+                    </Button>
+                  </Grid>
                 </Grid>
               </Box>
             </Box>

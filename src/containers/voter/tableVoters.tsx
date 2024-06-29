@@ -26,6 +26,8 @@ import { FilterMatchMode } from "primereact/api";
 import html2canvas from "html2canvas";
 import { createRoot } from "react-dom/client";
 
+import './tableVoters.css'
+
 // ** Types Imports
 //import { ThemeColor } from 'src/@core/layouts/types'
 interface ExtendedVoterDTO extends VoterDTO {
@@ -91,7 +93,11 @@ const TableVoters = () => {
 
         <Button
           label="Electeur"
-          style={{ marginLeft: "20px", backgroundColor: "#167845" }}
+          style={{
+            marginLeft: "20px",
+            backgroundColor: "#167845",
+            borderColor: "#167845",
+          }}
           icon="pi pi-plus"
           onClick={() => navigate("/dashboard/voter/create")}
         />
@@ -141,13 +147,13 @@ const TableVoters = () => {
         <Button
           icon="pi pi-file"
           className="p-button-rounded p-button-success"
-          style={{ marginRight: '0.2em', marginTop : '0.2em' }}
+          style={{ marginRight: "0.2em", marginTop: "0.2em" }}
           onClick={() => updateVoter(rowData, "view")}
         />
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-info"
-          style={{ marginRight: '0.2em', marginTop : '0.2em' }}
+          style={{ marginRight: "0.2em", marginTop: "0.2em" }}
           onClick={() => {
             updateVoter(rowData, "update");
           }}
@@ -156,14 +162,14 @@ const TableVoters = () => {
           icon="pi pi-trash"
           className="p-button-rounded"
           severity="danger"
-          style={{ marginRight: '0.2em', marginTop : '0.2em' }}
+          style={{ marginRight: "0.2em", marginTop: "0.2em" }}
           onClick={() => onClickDeleteDialog(rowData)}
         />
         <Button
           icon="pi pi-print"
           className="p-button-rounded p-button"
           severity="secondary"
-          style={{ marginRight: '0.2em', marginTop : '0.2em' }}
+          style={{ marginRight: "0.2em", marginTop: "0.2em" }}
           // onClick={() => onClickDeleteProduct("center", rowData)}
           onClick={() => saveCardPDF(rowData)}
         />
@@ -354,17 +360,31 @@ const TableVoters = () => {
     pdf.save(name);
     pdf.autoPrint();
   };
+  // const imageBodyTemplate = (rowData: ExtendedVoterDTO) => {
+  //   const values = rowData._id;
+  //   return (
+  //     <div>
+  //       <QRCode id={"qrcode" + rowData._id} value={values} />
+  //       <Button
+  //         label="Télécharger"
+  //         icon="pi pi-upload"
+  //         onClick={() => SavePdf(rowData._id)}
+  //         //onClick={() => saveCardPDF(rowData)}
+  //         className="p-button-text"
+  //       />
+  //     </div>
+  //   );
+  // };
   const imageBodyTemplate = (rowData: ExtendedVoterDTO) => {
     const values = rowData._id;
     return (
-      <div>
+      <div style={{ position: "relative" }}>
         <QRCode id={"qrcode" + rowData._id} value={values} />
         <Button
-          label="Télécharger"
-          icon="pi pi-times"
+          // label="Télécharger"
+          icon="pi pi-upload"
           onClick={() => SavePdf(rowData._id)}
-          //onClick={() => saveCardPDF(rowData)}
-          className="p-button-text"
+          className="p-button-rounded p-button-success custom-button"
         />
       </div>
     );
@@ -384,7 +404,6 @@ const TableVoters = () => {
   const cellTemplate = (rowData: any, field: keyof ExtendedVoterDTO) => {
     return <div style={cellStyle}>{rowData[field]}</div>;
   };
-
 
   useEffect(() => {
     checkToken();
@@ -407,7 +426,7 @@ const TableVoters = () => {
             header={header}
             loading={loading}
             filters={filters}
-            scrollable  
+            scrollable
             filterDisplay="row"
             globalFilterFields={[
               "ID",
@@ -479,7 +498,6 @@ const TableVoters = () => {
               field="gender"
               header="Sexe"
               sortable
-
               body={(rowData) => cellTemplate(rowData, "gender")}
               filterPlaceholder="Search by name"
             ></Column>

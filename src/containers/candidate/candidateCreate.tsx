@@ -16,6 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { CandidateApplicatif } from "../../service/applicatif/candidate/candidate.applicatif";
 import { ToastContainer, toast } from "react-toastify";
+import { sharedFormControlStyles } from "../../config/sharedFormControlStyles";
 
 
 
@@ -210,7 +211,7 @@ const CandidateCreate = () => {
                 <Button
                   variant="contained"
                   component="span"
-                  sx={{ mt: 2, mb: 2, marginLeft: { md: "29%", xs: 0 } }}
+                  sx={{ mt: 2, mb: 2, marginLeft: { md: "29%", xs: 0 }}}
                 >
                   <label htmlFor="raised-button-file" style={{ width: "100%" }}>
                     Télécharger une photo
@@ -245,8 +246,9 @@ const CandidateCreate = () => {
                         required
                         label="Nom"
                         name="nom"
-                        variant="filled"
-                        sx={{ width: "100%", maxWidth: "600px" }}
+                        variant="standard"
+                        sx={sharedFormControlStyles}
+                        // sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={name}
                         onChange={(e) => {
                           setName(e.target.value);
@@ -259,8 +261,9 @@ const CandidateCreate = () => {
                         fullWidth
                         required
                         label="Prénom(s)"
-                        variant="filled"
-                        sx={{ width: "100%", maxWidth: "600px" }}
+                        variant="standard"
+                        sx={sharedFormControlStyles}
+                        //sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={firstname}
                         onChange={(e) => {
                         setFirstame(e.target.value);
@@ -273,12 +276,13 @@ const CandidateCreate = () => {
                           label="Date de naissance"
                           value={dateBirth}
                           onChange={(newValue) => setDatebirth(newValue)}
+                          sx={sharedFormControlStyles}
                           slotProps={{
                             textField: {
-                              variant: "filled",
+                              variant: "standard",
                               required: true,
                               fullWidth: true,
-                              sx: { width: "100%", maxWidth: "600px" },
+                              //sx: { width: "100%", maxWidth: "600px" },
                               // Ajoutez d'autres props ici si nécessaire
                             },
                           }}
@@ -291,12 +295,13 @@ const CandidateCreate = () => {
                         fullWidth
                         required
                         label="Lieu de naissance"
-                        variant="filled"
+                        variant="standard"
+                        sx={sharedFormControlStyles}
+                        //sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={birthLocation}
                         onChange={(e) => {
                           setBirthLocation(e.target.value);
                         }}
-                        sx={{ width: "100%", maxWidth: "600px" }}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -306,12 +311,13 @@ const CandidateCreate = () => {
                         required
                         label="CIN"
                         name="Cin"
-                        variant="filled"
+                        variant="standard"
+                        sx={sharedFormControlStyles}
+                        //sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={cin}
                         onChange={(e) => {
                           setCin(e.target.value);
                         }}
-                        sx={{ width: "100%", maxWidth: "600px" }}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -320,12 +326,13 @@ const CandidateCreate = () => {
                           label="Date de délivrance CIN"
                           value={dateCin}
                           onChange={(newValue) => setDateCin(newValue)}
+                          sx={sharedFormControlStyles}
                           slotProps={{
                             textField: {
-                              variant: "filled",
+                              variant: "standard",
                               required: true,
                               fullWidth: true,
-                              sx: { width: "100%", maxWidth: "600px" },
+                              //sx: {width: "100%", maxWidth: "600px" },
                             },
                           }}
                         />
@@ -337,12 +344,13 @@ const CandidateCreate = () => {
                         fullWidth
                         required
                         label="Lieu de délivrance CIN"
-                        variant="filled"
+                        variant="standard"
+                        sx={sharedFormControlStyles}
+                        //sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={locationCin}
                         onChange={(e) => {
                           setLocationCin(e.target.value);
                         }}
-                        sx={{ width: "100%", maxWidth: "600px" }}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -351,8 +359,9 @@ const CandidateCreate = () => {
                         fullWidth
                         required
                         label="Partie Politique"
-                        variant="filled"
-                        sx={{ width: "100%", maxWidth: "600px" }}
+                        variant="standard"
+                        sx={sharedFormControlStyles}
+                        //sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={partyEntity}
                         onChange={(e) => {
                           setPartyEntity(e.target.value);
@@ -365,8 +374,9 @@ const CandidateCreate = () => {
                         fullWidth
                         required
                         label="Siège"
-                        variant="filled"
-                        sx={{ width: "100%", maxWidth: "600px" }}
+                        variant="standard"
+                        sx={sharedFormControlStyles}
+                        //sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={compaingLocation}
                         onChange={(e) => {
                           setCompaingLocation(e.target.value);
@@ -379,8 +389,9 @@ const CandidateCreate = () => {
                         fullWidth
                         required
                         label="Description"
-                        variant="filled"
-                        sx={{ width: "100%", maxWidth: "600px" }}
+                        variant="standard"
+                        sx={sharedFormControlStyles}
+                        //sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={description}
                         onChange={(e) => {
                           setDescription(e.target.value);
@@ -388,16 +399,31 @@ const CandidateCreate = () => {
                       />
                     </Grid>
                   </Grid>
+                  <Grid item xs={12}>
+                    
+                  </Grid>
                 </Box>
+                <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end", // This will align the button to the right
+                  mt: 3, // Adjust margin top as needed
+                  mb: 2, // Adjust margin bottom as needed
+                }}>
+
                 <Button
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{
+                    background:
+                      "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                  }}
                   onClick={() => {
                     createCandidate();
                   }}
                 >
                   Enregister
                 </Button>
+                </Box>
               </Grid>
             </Grid>
           </Box>
