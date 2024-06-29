@@ -16,6 +16,7 @@ import React from "react";
 import { StationApplicatif } from "../../service/applicatif/station/station.applicatif";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { sharedFormControlStyles } from "../../config/sharedFormControlStyles";
 
 const StationCreate = () => {
   const navigate = useNavigate();
@@ -244,7 +245,8 @@ const StationCreate = () => {
                   required
                   label="Nom du bureau de vote"
                   name="nom"
-                  variant="filled"
+                  variant="standard"
+                    sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={nameStation}
                   onChange={(e) => {
@@ -258,7 +260,8 @@ const StationCreate = () => {
                   fullWidth
                   required
                   label="Region"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={region}
                   onChange={(e) => {
@@ -273,7 +276,8 @@ const StationCreate = () => {
                   required
                   label="District"
                   name="district"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={district}
                   onChange={(e) => {
@@ -287,7 +291,8 @@ const StationCreate = () => {
                   fullWidth
                   required
                   label="Commune"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={commune}
                   onChange={(e) => {
@@ -302,7 +307,8 @@ const StationCreate = () => {
                   required
                   label="Fokontany"
                   name="nom"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={fokontany}
                   onChange={(e) => {
@@ -316,7 +322,8 @@ const StationCreate = () => {
                   fullWidth
                   required
                   label="Centre"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={centre}
                   onChange={(e) => {
@@ -331,7 +338,8 @@ const StationCreate = () => {
                   required
                   label="Code"
                   name="nom"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={code}
                   onChange={(e) => {
@@ -345,7 +353,8 @@ const StationCreate = () => {
                   fullWidth
                   required
                   label="Nombre d'élécteur"
-                  variant="filled"
+                  variant="standard"
+                  sx={sharedFormControlStyles}
                   disabled={isFileSelected}
                   value={nbVoters}
                   onChange={(e) => {
@@ -357,7 +366,11 @@ const StationCreate = () => {
               <Grid item>
                 <Button
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  // sx={{ mt: 3, mb: 2 }}
+                  sx={{
+                    background:
+                      "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                  }}
                   onClick={() => {
                     createStation();
                   }}

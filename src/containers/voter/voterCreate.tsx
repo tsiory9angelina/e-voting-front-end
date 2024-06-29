@@ -150,16 +150,24 @@ const VoterCreate = () => {
             flexDirection: "column",
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ color: 'green !important', mb: 4 }}>
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{ color: "green !important", mb: 4 }}
+          >
             Electeur
           </Typography>
           <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
-                <CustomTextField label="Nom" name="nom"  value={name}
-                  onChange={(e :React.ChangeEvent<HTMLInputElement>) => {
+                <CustomTextField
+                  label="Nom"
+                  name="nom"
+                  value={name}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setName(e.target.value);
-                  }}/>
+                  }}
+                />
                 {/* <TextField
                   // id="nom"
                   id="standard-basic"
@@ -202,10 +210,14 @@ const VoterCreate = () => {
                 /> */}
               </Grid>
               <Grid item xs={12} md={6}>
-              <CustomTextField label="Prénom(s)" name="prenom" value={firstname}
-                  onChange={(e :React.ChangeEvent<HTMLInputElement>) => {
+                <CustomTextField
+                  label="Prénom(s)"
+                  name="prenom"
+                  value={firstname}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setFirstName(e.target.value);
-                  }}/>
+                  }}
+                />
                 {/* <TextField
                 id="standard-basic"
                   fullWidth
@@ -220,7 +232,12 @@ const VoterCreate = () => {
                 /> */}
               </Grid>
               <Grid item xs={12} md={6}>
-                <FormControl variant="standard" fullWidth required sx={sharedFormControlStyles}>
+                <FormControl
+                  variant="standard"
+                  fullWidth
+                  required
+                  sx={sharedFormControlStyles}
+                >
                   <InputLabel id="gender-label">Sexe</InputLabel>
                   <Select
                     labelId="gender-label"
@@ -259,7 +276,7 @@ const VoterCreate = () => {
                     onChange={(newValue) => setBirthDate(newValue)}
                     slotProps={{
                       textField: {
-                        variant:"standard",
+                        variant: "standard",
                         required: true,
                         fullWidth: true,
                         sx: sharedFormControlStyles,
@@ -306,7 +323,7 @@ const VoterCreate = () => {
                     onChange={(newValue) => setDateCin(newValue)}
                     slotProps={{
                       textField: {
-                        variant:"standard",
+                        variant: "standard",
                         required: true,
                         fullWidth: true,
                         sx: sharedFormControlStyles,
@@ -391,7 +408,31 @@ const VoterCreate = () => {
                 />
               </Grid>
             </Grid>
-            <Button
+              {/* <Grid item xs={12} md={6}> */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end", // This will align the button to the right
+                    mt: 3, // Adjust margin top as needed
+                    mb: 2, // Adjust margin bottom as needed
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      background:
+                        "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                    }}
+                    onClick={() => {
+                      createVoter();
+                    }}
+                  >
+                    Enregister
+                  </Button>
+                  
+                </Box>
+              {/* </Grid> */}
+            {/* <Button
               variant="contained"
               sx={{ mt: 3, mb: 2, background: 'linear-gradient(98deg, #57B77C, #0a713f 94%)' }}
               onClick={() => {
@@ -399,7 +440,7 @@ const VoterCreate = () => {
               }}
             >
               Enregister
-            </Button>
+            </Button> */}
           </Box>
         </Box>
         <ToastContainer />

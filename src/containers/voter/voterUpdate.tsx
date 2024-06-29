@@ -21,6 +21,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { VoterApplicatif } from "../../service/applicatif/voter/voter.applicatif";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import VoterDTO from "../../data/dto/voter.dto";
+import { sharedFormControlStyles } from "../../config/sharedFormControlStyles";
 
 const VoterUpdate = () => {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ const VoterUpdate = () => {
             position: "top-right",
           });
           setTimeout(() => {
-            navigate("/dashboard/voter")
+            navigate("/dashboard/voter");
           }, 2000);
         })
         .catch((err) => {
@@ -153,9 +154,10 @@ const VoterUpdate = () => {
                     required
                     label="Nom"
                     name="nom"
-                    variant="filled"
+                    variant="standard"
                     value={name}
                     disabled
+                    sx={sharedFormControlStyles}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -163,9 +165,10 @@ const VoterUpdate = () => {
                     id="prenom"
                     fullWidth
                     label="Prénom(s)"
-                    variant="filled"
+                    variant="standard"
                     value={firstname}
                     disabled
+                    sx={sharedFormControlStyles}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -174,11 +177,11 @@ const VoterUpdate = () => {
                     fullWidth
                     label="Sexe"
                     name="gender"
-                    variant="filled"
+                    variant="standard"
                     value={gender}
                     disabled
+                    sx={sharedFormControlStyles}
                   />
-                  
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -186,9 +189,10 @@ const VoterUpdate = () => {
                     fullWidth
                     label="Email"
                     name="email"
-                    variant="filled"
+                    variant="standard"
                     value={email}
                     disabled
+                    sx={sharedFormControlStyles}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -196,9 +200,10 @@ const VoterUpdate = () => {
                     <DatePicker
                       label="Date de naissance"
                       value={birthDate}
+                      sx={sharedFormControlStyles}
                       slotProps={{
                         textField: {
-                          variant: "filled",
+                          variant: "standard",
                           required: true,
                           fullWidth: true,
                           disabled: true,
@@ -215,7 +220,7 @@ const VoterUpdate = () => {
                     name="birthDate"
                     variant="filled"
                     value={birthDate}
-                   disabled
+                    disabled
                   /> */}
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -223,9 +228,10 @@ const VoterUpdate = () => {
                     id="fbirthLocation"
                     fullWidth
                     label="Lieu de naissance"
-                    variant="filled"
+                    variant="standard"
                     value={birthLocation}
                     disabled
+                    sx={sharedFormControlStyles}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -234,9 +240,10 @@ const VoterUpdate = () => {
                     fullWidth
                     label="CIN"
                     name="Cin"
-                    variant="filled"
+                    variant="standard"
                     value={cin}
                     disabled
+                    sx={sharedFormControlStyles}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -244,9 +251,10 @@ const VoterUpdate = () => {
                     <DatePicker
                       label="Date de délivrance CIN"
                       value={dateCin}
+                      sx={sharedFormControlStyles}
                       slotProps={{
                         textField: {
-                          variant: "filled",
+                          variant: "standard",
                           required: true,
                           fullWidth: true,
                           disabled: true,
@@ -263,7 +271,7 @@ const VoterUpdate = () => {
                     variant="filled"
                     value={dateCin}
                     disabled
-                   
+                  
                   /> */}
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -271,9 +279,10 @@ const VoterUpdate = () => {
                     id="locationCin"
                     fullWidth
                     label="Lieu de délivrance CIN"
-                    variant="filled"
+                    variant="standard"
                     value={locationCin}
                     disabled
+                    sx={sharedFormControlStyles}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -282,21 +291,34 @@ const VoterUpdate = () => {
                     fullWidth
                     label="Adresse"
                     name="address"
-                    variant="filled"
                     value={address}
                     disabled
+                    variant="standard"
+                    sx={sharedFormControlStyles}
                   />
                 </Grid>
               </Grid>
-              <Button
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={() => {
-                  navigate("/dashboard/voter");
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end", // This will align the button to the right
+                  mt: 3, // Adjust margin top as needed
+                  mb: 2, // Adjust margin bottom as needed
                 }}
               >
-                Retour
-              </Button>
+                <Button
+                  variant="contained"
+                  // sx={{ mt: 3, mb: 2 }}
+                  sx={{
+                    background: "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                  }}
+                  onClick={() => {
+                    navigate("/dashboard/voter");
+                  }}
+                >
+                  Retour
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Container>
@@ -329,7 +351,8 @@ const VoterUpdate = () => {
                     required
                     label="Nom"
                     name="nom"
-                    variant="filled"
+                    variant="standard"
+                    sx={sharedFormControlStyles}
                     value={name}
                     onChange={(e) => {
                       setName(e.target.value);
@@ -342,7 +365,8 @@ const VoterUpdate = () => {
                     fullWidth
                     required
                     label="Prénom(s)"
-                    variant="filled"
+                    variant="standard"
+                    sx={sharedFormControlStyles}
                     value={firstname}
                     onChange={(e) => {
                       setFirstName(e.target.value);
@@ -362,7 +386,7 @@ const VoterUpdate = () => {
                       setGender(e.target.value);
                     }}
                   /> */}
-                  <FormControl variant="filled" fullWidth required>
+                  <FormControl variant="standard" fullWidth required sx={sharedFormControlStyles}>
                     <InputLabel id="gender-label">Sexe</InputLabel>
                     <Select
                       labelId="gender-label"
@@ -385,7 +409,8 @@ const VoterUpdate = () => {
                     required
                     label="Email"
                     name="email"
-                    variant="filled"
+                    variant="standard"
+                    sx={sharedFormControlStyles}
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -398,9 +423,10 @@ const VoterUpdate = () => {
                       label="Date de naissance"
                       value={birthDate}
                       onChange={(newValue) => setBirthDate(newValue)}
+                      sx={sharedFormControlStyles}
                       slotProps={{
                         textField: {
-                          variant: "filled",
+                          variant: "standard",
                           required: true,
                           fullWidth: true,
                           // Ajoutez d'autres props ici si nécessaire
@@ -415,7 +441,8 @@ const VoterUpdate = () => {
                     fullWidth
                     required
                     label="Lieu de naissance"
-                    variant="filled"
+                    variant="standard"
+                    sx={sharedFormControlStyles}
                     value={birthLocation}
                     onChange={(e) => {
                       setBirthLocation(e.target.value);
@@ -429,7 +456,8 @@ const VoterUpdate = () => {
                     required
                     label="CIN"
                     name="Cin"
-                    variant="filled"
+                    variant="standard"
+                    sx={sharedFormControlStyles}
                     value={cin}
                     onChange={(e) => {
                       setCin(e.target.value);
@@ -442,9 +470,10 @@ const VoterUpdate = () => {
                       label="Date de délivrance CIN"
                       value={dateCin}
                       onChange={(newValue) => setDateCin(newValue)}
+                      sx={sharedFormControlStyles}
                       slotProps={{
                         textField: {
-                          variant: "filled",
+                          variant: "standard",
                           required: true,
                           fullWidth: true,
                           // Ajoutez d'autres props ici si nécessaire
@@ -459,7 +488,8 @@ const VoterUpdate = () => {
                     fullWidth
                     required
                     label="Lieu de délivrance CIN"
-                    variant="filled"
+                    variant="standard"
+                    sx={sharedFormControlStyles}
                     value={locationCin}
                     onChange={(e) => {
                       setLocationCin(e.target.value);
@@ -473,7 +503,8 @@ const VoterUpdate = () => {
                     required
                     label="Adresse"
                     name="address"
-                    variant="filled"
+                    variant="standard"
+                    sx={sharedFormControlStyles}
                     value={address}
                     onChange={(e) => {
                       setAddress(e.target.value);
@@ -481,15 +512,26 @@ const VoterUpdate = () => {
                   />
                 </Grid>
               </Grid>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end", // This will align the button to the right
+                  mt: 3, // Adjust margin top as needed
+                  mb: 2, // Adjust margin bottom as needed
+                }}
+              >
               <Button
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{
+                  background: "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                }}
                 onClick={() => {
                   updateVoter();
                 }}
               >
                 Enregister
               </Button>
+                </Box>
             </Box>
           </Box>
           <ToastContainer />

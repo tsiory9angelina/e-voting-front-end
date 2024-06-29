@@ -1,7 +1,6 @@
 import {
   AppBar,
   Avatar,
-  Badge,
   Box,
   Divider,
   IconButton,
@@ -10,8 +9,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
-import NotificationsTwoToneIcon from "@mui/icons-material/NotificationsTwoTone";
-import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
+// import NotificationsTwoToneIcon from "@mui/icons-material/NotificationsTwoTone";
+// import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import { useProSidebar } from "react-pro-sidebar";
 import { useState } from "react";
 import { PersonAdd, Settings, Logout } from "@mui/icons-material";
@@ -129,15 +128,15 @@ function AppHeader() {
           <MenuTwoToneIcon />
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
-        <IconButton title="Notifications" sx={{color :'dark'}}>
+        {/* <IconButton title="Notifications" sx={{color :'dark'}}>
           <Badge badgeContent={4} color="error">
             <NotificationsTwoToneIcon />
           </Badge>
-        </IconButton>
+        </IconButton> */}
 
-        <IconButton title="Settings" sx={{color :'dark'}}>
+        {/* <IconButton title="Settings" sx={{color :'dark'}}>
           <SettingsTwoToneIcon />
-        </IconButton>
+        </IconButton> */}
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
