@@ -14,12 +14,14 @@ import DashboardEVote from "./containers/dashboard/dashboardEvote";
 
 const routeComponents = [
   { path: "/", component: Login, protected: false },
+  
   {
     path: "/dashboard",
     component: Body,
     protected: true,
     routes: [
       { path: "/dashboard", component: DashboardEVote, protected: true },
+      
       {
         path: "/dashboard/candidate",
         component: CandidateView,

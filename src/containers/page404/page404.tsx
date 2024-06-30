@@ -1,7 +1,7 @@
 import { Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const page404 = () => {
+const Page404 = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center' }}>
       <Typography variant="h1" style={{ marginBottom: 16 }}>
@@ -23,4 +23,4 @@ const page404 = () => {
   );
 };
 
-export default page404;
+export default Page404;

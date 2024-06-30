@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // ** MUI Imports
 import Card from "@mui/material/Card";
@@ -13,20 +14,21 @@ import DialogTitle from "@mui/material/DialogTitle";
 // ** PRIMEREACT Imports
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { FilterMatchMode } from "primereact/api";
 
 import { VoterApplicatif } from "../../service/applicatif/voter/voter.applicatif";
 import VoterDTO from "../../data/dto/voter.dto";
+
 import QRCode from "qrcode.react";
 import { jsPDF } from "jspdf";
-import { FilterMatchMode } from "primereact/api";
-
-import html2canvas from "html2canvas";
-import { createRoot } from "react-dom/client";
+// import html2canvas from "html2canvas";
+// import { createRoot } from "react-dom/client";
 
 import './tableVoters.css'
+//import headerImgCardVoter from "../candidate/image";
+import saveCardVoterPDF from "./saveCardVoter";
 
 // ** Types Imports
 //import { ThemeColor } from 'src/@core/layouts/types'
@@ -34,10 +36,10 @@ interface ExtendedVoterDTO extends VoterDTO {
   _id: string;
 }
 // ** Types of the properties of the QR Code Parameters
-type QRCodeProps = {
-  id: string;
-  value: string;
-};
+// type QRCodeProps = {
+//   id: string;
+//   value: string;
+// };
 
 const TableVoters = () => {
   const [token, setToken] = useState("");
@@ -171,7 +173,7 @@ const TableVoters = () => {
           severity="secondary"
           style={{ marginRight: "0.2em", marginTop: "0.2em" }}
           // onClick={() => onClickDeleteProduct("center", rowData)}
-          onClick={() => saveCardPDF(rowData)}
+          onClick={() => saveCardVoterPDF(rowData)}
         />
       </React.Fragment>
     );
@@ -252,18 +254,18 @@ const TableVoters = () => {
     }
   };
 
-  const QRCodeComponent = ({ id, value }: QRCodeProps) => (
-    <QRCode
-      id={id}
-      value={value}
-      size={128}
-      bgColor="#FFFFFF"
-      fgColor="#1DA1F2"
-      level="Q"
-    />
-  );
+  // const QRCodeComponent = ({ id, value }: QRCodeProps) => (
+  //   <QRCode
+  //     id={id}
+  //     value={value}
+  //     size={128}
+  //     bgColor="#FFFFFF"
+  //     fgColor="#1DA1F2"
+  //     level="Q"
+  //   />
+  // );
 
-  const saveCardPDF = async (voter: ExtendedVoterDTO) => {
+  /*const saveCardPDF = async (voter: ExtendedVoterDTO) => {
     const { _id, name, firstname, address } = voter;
 
     // Créez un élément temporaire pour le rendu du QR code
@@ -300,6 +302,14 @@ const TableVoters = () => {
       unit: "mm",
       format: "A7",
     });
+
+    // Ajouter une couleur de fond
+  pdf.setFillColor(230, 230, 250); // Exemple de couleur de fond (lavender)
+  pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), 'F');
+
+
+  
+  pdf.addImage(headerImgCardVoter, 'JPEG', 10, 10, pdf.internal.pageSize.getWidth() - 20, 20);
 
     // Ajoutez l'image du QR code au PDF
     const qrSize = 30; // Taille du QR code
@@ -340,7 +350,7 @@ const TableVoters = () => {
     // Sauvegardez le PDF
     const pdfName = `Carte-${name}-${firstname}.pdf`;
     pdf.save(pdfName);
-  };
+  };*/
 
   const SavePdf = (id: string) => {
     const pdf = new jsPDF({
@@ -544,7 +554,7 @@ const TableVoters = () => {
               header="Action"
               body={actionTemplateVoter}
               exportable={false}
-              style={{ minWidth: "8rem" }}
+              style={{ minWidth: "8rem", maxWidth: "9rem" }}
             ></Column>
           </DataTable>
         </TableContainer>
