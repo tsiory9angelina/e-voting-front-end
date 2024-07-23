@@ -13,7 +13,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 
 import { CandidateApplicatif } from "../../service/applicatif/candidate/candidate.applicatif";
-import { Avatar } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import { Dialog } from "primereact/dialog";
 import CandidateDTO from "../../data/dto/candidate.dto";
 import { FilterMatchMode } from "primereact/api";
@@ -49,8 +49,10 @@ const TableCandidate = () => {
   const renderCandidateHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-        <h4 className="m-0">Liste des candidats</h4>
-
+        {/* <h4 className="m-0" style={{ color : "green  !important" }}>Liste des candidats</h4> */}
+        <Typography component="h4" variant="h6" sx={{ color: "green !important", paddingTop: "30px" , paddingBottom: "30px"}}>
+Liste des candidats
+</Typography>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText

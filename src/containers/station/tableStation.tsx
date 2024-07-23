@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 // ** MUI Imports
 import Card from "@mui/material/Card";
 import TableContainer from "@mui/material/TableContainer";
+import { Typography } from "@mui/material";
 
 // ** PRIMEREACT Imports
 import { DataTable } from "primereact/datatable";
@@ -53,8 +54,10 @@ const TableStation = () => {
   const renderVoterHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-        <h4 className="m-0">Liste des bureaux de votes</h4>
-
+        {/* <h4 className="m-0">Liste des bureaux de votes</h4> */}
+        <Typography component="h4" variant="h6" sx={{ color: "green !important",  paddingTop: "30px" , paddingBottom: "30px"}}>
+        Liste des bureaux de votes
+</Typography>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText

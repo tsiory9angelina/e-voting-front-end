@@ -29,6 +29,7 @@ import { createRoot } from "react-dom/client";
 import "./tableVoters.css";
 import headerImgCardVoter from "../candidate/image";
 import backgroundImgCardVoter from "../candidate/imagebackground";
+import { Typography } from "@mui/material";
 
 // ** Types Imports
 //import { ThemeColor } from 'src/@core/layouts/types'
@@ -82,8 +83,10 @@ const TableVoters = () => {
   const renderVoterHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-        <h4 className="m-0">Liste des élécteurs</h4>
-
+        {/* <h4 className="m-0">Liste des élécteurs</h4> */}
+        <Typography component="h4" variant="h6" sx={{ color: "green !important",  paddingTop: "30px" , paddingBottom: "30px"}}>
+        Liste des élécteurs
+</Typography>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
