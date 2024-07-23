@@ -87,7 +87,17 @@ const VoterCreate = () => {
           }, 2000); // Attendre 2000 millisecondes (2 secondes)
         })
         .catch((err) => {
-          console.log(err.response.data);
+          if(err.response.data){
+            toast.error("Erreur :"+ err.response.data, {
+              position: "top-right",
+            });
+            console.log(err.response.data);
+          }
+          else {
+            toast.error("Erreur :"+ err, {
+              position: "top-right",
+            });
+          }
         });
     }
   };
@@ -163,6 +173,7 @@ const VoterCreate = () => {
                 <CustomTextField
                   label="Nom"
                   name="nom"
+                  required
                   value={name}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setName(e.target.value);

@@ -259,8 +259,8 @@ const TableVoters = () => {
       id={id}
       value={value}
       size={128}
-      bgColor="#FFFFFF"
-      fgColor="#1DA1F2"
+      // bgColor="#FFFFFF"
+      // fgColor="#1DA1F2"
       level="Q"
     />
   );

@@ -239,7 +239,8 @@ const StationCreate = () => {
             flexDirection: "column",
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5"
+            sx={{ color: "green !important", mb: 4 }}>
             Bureau de vote
           </Typography>
           <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>

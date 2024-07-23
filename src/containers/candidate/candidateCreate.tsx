@@ -166,7 +166,7 @@ const CandidateCreate = () => {
             flexDirection: "column",
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ color: "green !important"}}>
             Créer candidat
           </Typography>
           {/* <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}> */}
@@ -194,7 +194,8 @@ const CandidateCreate = () => {
                     maxWidth: 300,
                     height: 400,
                     border: "3px solid",
-                    borderColor: "primary.main",
+                    //borderColor: "primary.main",
+                    borderColor: "gray",
                     marginLeft: { md: "30%", xs: 0 },
                     //margin: "auto"
                   }}
@@ -211,6 +212,7 @@ const CandidateCreate = () => {
                 <Button
                   variant="contained"
                   component="span"
+                  color="info"
                   sx={{ mt: 2, mb: 2, marginLeft: { md: "29%", xs: 0 }}}
                 >
                   <label htmlFor="raised-button-file" style={{ width: "100%" }}>
