@@ -114,7 +114,8 @@ const StationUpdate = () => {
                 flexDirection: "column",
               }}
             >
-              <Typography component="h1" variant="h5">
+              <Typography component="h1" variant="h5"
+            sx={{ color: "green !important", mb: 4 }}>
                 Bureau de vote - Consultation
               </Typography>
               <Box
@@ -285,7 +286,8 @@ const StationUpdate = () => {
                 flexDirection: "column",
               }}
             >
-              <Typography component="h1" variant="h5">
+              <Typography component="h1" variant="h5"
+            sx={{ color: "green !important", mb: 4 }}>
                 Bureau de vote - Modification
               </Typography>
               <Box

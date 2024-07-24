@@ -165,7 +165,7 @@ const VoterCreate = () => {
             variant="h5"
             sx={{ color: "green !important", mb: 4 }}
           >
-            Electeur
+            Créer un électeur
           </Typography>
           <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2}>

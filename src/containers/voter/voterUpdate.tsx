@@ -142,8 +142,9 @@ const VoterUpdate = () => {
               flexDirection: "column",
             }}
           >
-            <Typography component="h1" variant="h5">
-              Electeur
+            <Typography component="h1" variant="h5"
+            sx={{ color: "green !important", mb: 4 }}>
+              Electeur  - Consultation
             </Typography>
             <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
               <Grid container spacing={2}>
@@ -339,8 +340,9 @@ const VoterUpdate = () => {
               flexDirection: "column",
             }}
           >
-            <Typography component="h1" variant="h5">
-              Electeur
+            <Typography component="h1" variant="h5"
+            sx={{ color: "green !important", mb: 4 }}>
+              Electeur - Modification
             </Typography>
             <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
               <Grid container spacing={2}>

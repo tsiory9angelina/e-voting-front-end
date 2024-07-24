@@ -35,6 +35,7 @@ const CandidateUpdate = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
 
   const [name, setName] = useState("");
+  const [firstname, setFirstname] = useState("");
   const [compaingLocation, setCompaingLocation] = useState("");
   const [partyEntity, setPartyEntity] = useState("");
   const [cin, setCin] = useState("");
@@ -73,6 +74,7 @@ const CandidateUpdate = () => {
             setCandidate(response);
           }
           setName(response.name);
+          setFirstname(response.firstname);
           console.log("========================== image : ");
           console.log(response.imageUrl);
           if (response.imageUrl) {
@@ -107,6 +109,7 @@ const CandidateUpdate = () => {
   const updateCandidate = () => {
     const formData = new FormData();
     formData.append("name", name);
+    formData.append("firstname", firstname);
     formData.append("partyEntity", partyEntity);
     formData.append("compaingLocation", compaingLocation);
     formData.append(
@@ -171,7 +174,7 @@ const CandidateUpdate = () => {
               flexDirection: "column",
             }}
           >
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx={{ color: "green !important" }}>
               Candidat - Vue en détail
             </Typography>
             {/* <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}> */}
@@ -253,7 +256,7 @@ const CandidateUpdate = () => {
                         label="Prénom(s)"
                         variant="standard"
                         sx={sharedFormControlStyles}
-                        //value={firstname}
+                        value={firstname}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -404,8 +407,8 @@ const CandidateUpdate = () => {
               flexDirection: "column",
             }}
           >
-            <Typography component="h1" variant="h5">
-              Créer candidat
+            <Typography component="h1" variant="h5" sx={{ color: "green !important" }}>
+              Candidat - Modification
             </Typography>
             {/* <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}> */}
             <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
@@ -502,10 +505,10 @@ const CandidateUpdate = () => {
                         label="Prénom(s)"
                         variant="standard"
                         sx={sharedFormControlStyles}
-                        //value={firstname}
-                        //onChange={(e) => {
-                        //setName(e.target.value);
-                        //}}
+                        value={firstname}
+                        onChange={(e) => {
+                          setFirstname(e.target.value);
+                        }}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -630,6 +633,17 @@ const CandidateUpdate = () => {
                     </Grid>
                   </Grid>
                   <Grid container spacing={2} justifyContent="flex-end">
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2, background: "#808080" }}
+                        onClick={() => {
+                          navigate("/dashboard/candidate");
+                        }}
+                      >
+                        Retour
+                      </Button>
+                    </Grid>
                     <Grid item>
                       <Button
                         variant="contained"

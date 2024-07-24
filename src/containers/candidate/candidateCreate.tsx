@@ -10,15 +10,13 @@ import {
   Avatar,
 } from "@mui/material";
 // import dayjs, { Dayjs } from "dayjs";
-import{ Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { CandidateApplicatif } from "../../service/applicatif/candidate/candidate.applicatif";
 import { ToastContainer, toast } from "react-toastify";
 import { sharedFormControlStyles } from "../../config/sharedFormControlStyles";
-
-
 
 const CandidateCreate = () => {
   const navigate = useNavigate();
@@ -38,8 +36,6 @@ const CandidateCreate = () => {
   const [locationCin, setLocationCin] = useState("");
   const [description, setDescription] = useState("");
 
-
-  
   // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   if (event.target.files && event.target.files[0]) {
   //     const img = event.target.files[0];
@@ -49,10 +45,10 @@ const CandidateCreate = () => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const imgFile = event.target.files[0];
-      console.log(selectedImage)
-    // const formData = new FormData();
-    // formData.append("fichierREsult", event.target.files[0], event.target.files[0].name);
-    // console.log(formData)
+      console.log(selectedImage);
+      // const formData = new FormData();
+      // formData.append("fichierREsult", event.target.files[0], event.target.files[0].name);
+      // console.log(formData)
       setSelectedImage(imgFile); // Stockez le fichier image directement
 
       setImagePreviewUrl(URL.createObjectURL(imgFile)); // Stockez l'URL de l'aperçu de l'image
@@ -60,7 +56,7 @@ const CandidateCreate = () => {
   };
   // const aff =()=>{
   //   let tokenUser = localStorage.getItem("token");
-    
+
   //       if (tokenUser) {
   //         //Vérifier si le token commence et se termine par des guillemets doubles
   //         if (tokenUser.startsWith('"') && tokenUser.endsWith('"')) {
@@ -73,9 +69,9 @@ const CandidateCreate = () => {
   //             "Content-Type": "multipart/form-data",
   //         }
   //         })
-            
+
   //           .then((response) => {
-  
+
   //             setImageUrl(response.data.imageUrl); // Mettez à jour l'URL de l'image dans le state
   //           })
   //           .catch((error) => {
@@ -85,26 +81,27 @@ const CandidateCreate = () => {
   // }
 
   const createCandidate = () => {
-
-    console.log("ici , image ")
-    console.log(selectedImage)
+    console.log("ici , image ");
+    console.log(selectedImage);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("firstname", firstname);
     formData.append("partyEntity", partyEntity);
     formData.append("compaingLocation", compaingLocation);
-    formData.append("dateBirth", dateBirth ? dateBirth.format('YYYY-MM-DD') : '');
+    formData.append(
+      "dateBirth",
+      dateBirth ? dateBirth.format("YYYY-MM-DD") : ""
+    );
     formData.append("birthLocation", birthLocation);
     formData.append("cin", cin);
-    formData.append("dateCin",dateCin ? dateCin.format('YYYY-MM-DD') : '');
+    formData.append("dateCin", dateCin ? dateCin.format("YYYY-MM-DD") : "");
     formData.append("locationCin", locationCin);
     formData.append("description", description);
 
-     // Ajoutez l'image au FormData si elle est sélectionnée
-  if (selectedImage) {
-    formData.append("imageUrl", selectedImage, selectedImage.name);
-  }
-
+    // Ajoutez l'image au FormData si elle est sélectionnée
+    if (selectedImage) {
+      formData.append("imageUrl", selectedImage, selectedImage.name);
+    }
 
     // const candidate: CandidateDTO = {
     //   name: name,
@@ -133,13 +130,12 @@ const CandidateCreate = () => {
       }
       CandidateApplicatif.createCandidate(formData, tokenUser)
         .then(() => {
-          
           toast.success("Candidat ajouté avec succès", {
             position: "top-right",
           });
           setTimeout(() => {
             console.log("Candidat ajouté avec succès");
-            navigate("/dashboard/candidate")
+            navigate("/dashboard/candidate");
           }, 2000); // Attendre 2000 millisecondes (2 secondes)
         })
         .catch((err) => {
@@ -147,7 +143,7 @@ const CandidateCreate = () => {
         });
     }
   };
-  
+
   return (
     <>
       <Container
@@ -166,7 +162,11 @@ const CandidateCreate = () => {
             flexDirection: "column",
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ color: "green !important"}}>
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{ color: "green !important" }}
+          >
             Créer candidat
           </Typography>
           {/* <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}> */}
@@ -213,7 +213,7 @@ const CandidateCreate = () => {
                   variant="contained"
                   component="span"
                   color="info"
-                  sx={{ mt: 2, mb: 2, marginLeft: { md: "29%", xs: 0 }}}
+                  sx={{ mt: 2, mb: 2, marginLeft: { md: "29%", xs: 0 } }}
                 >
                   <label htmlFor="raised-button-file" style={{ width: "100%" }}>
                     Télécharger une photo
@@ -268,7 +268,7 @@ const CandidateCreate = () => {
                         //sx={{sharedFormControlStyles, width: "100%", maxWidth: "600px" }}
                         value={firstname}
                         onChange={(e) => {
-                        setFirstame(e.target.value);
+                          setFirstame(e.target.value);
                         }}
                       />
                     </Grid>
@@ -401,35 +401,47 @@ const CandidateCreate = () => {
                       />
                     </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    
-                  </Grid>
+                  <Grid item xs={12}></Grid>
                 </Box>
                 <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end", // This will align the button to the right
-                  mt: 3, // Adjust margin top as needed
-                  mb: 2, // Adjust margin bottom as needed
-                }}>
-
-                <Button
-                  variant="contained"
                   sx={{
-                    background:
-                      "linear-gradient(98deg, #57B77C, #0a713f 94%)",
-                  }}
-                  onClick={() => {
-                    createCandidate();
+                    display: "flex",
+                    justifyContent: "flex-end", // This will align the button to the right
+                    mt: 3, // Adjust margin top as needed
+                    mb: 2, // Adjust margin bottom as needed
                   }}
                 >
-                  Enregister
-                </Button>
+                  <Grid container spacing={2} justifyContent="flex-end">
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        sx={{ background: "#808080" }}
+                        onClick={() => {
+                          navigate("/dashboard/candidate");
+                        }}
+                      >
+                        Retour
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          background:
+                            "linear-gradient(98deg, #57B77C, #0a713f 94%)",
+                        }}
+                        onClick={() => {
+                          createCandidate();
+                        }}
+                      >
+                        Enregister
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Box>
               </Grid>
             </Grid>
           </Box>
-          
         </Box>
         <ToastContainer />
       </Container>

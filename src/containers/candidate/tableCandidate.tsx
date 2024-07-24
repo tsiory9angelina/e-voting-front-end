@@ -31,7 +31,9 @@ const TableCandidate = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [candidates, setCandidates] = useState<CandidateDTO[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [filters, setFilters] = useState<any>({global: { value: null, matchMode: FilterMatchMode.CONTAINS}});
+  const [filters, setFilters] = useState<any>({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  });
 
   const navigate = useNavigate();
 
@@ -50,9 +52,17 @@ const TableCandidate = () => {
     return (
       <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
         {/* <h4 className="m-0" style={{ color : "green  !important" }}>Liste des candidats</h4> */}
-        <Typography component="h4" variant="h6" sx={{ color: "green !important", paddingTop: "30px" , paddingBottom: "30px"}}>
-Liste des candidats
-</Typography>
+        <Typography
+          component="h4"
+          variant="h6"
+          sx={{
+            color: "green !important",
+            paddingTop: "30px",
+            paddingBottom: "30px",
+          }}
+        >
+          Liste des candidats
+        </Typography>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -64,7 +74,11 @@ Liste des candidats
 
         <Button
           label="Candidat"
-          style={{ marginLeft: "20px", backgroundColor: "#167845" , borderColor: "#167845" }}
+          style={{
+            marginLeft: "20px",
+            backgroundColor: "#167845",
+            borderColor: "#167845",
+          }}
           icon="pi pi-plus"
           onClick={() => navigate("/dashboard/candidate/create")}
         />
@@ -128,13 +142,13 @@ Liste des candidats
         <Button
           icon="pi pi-file"
           className="p-button-rounded p-button-success"
-          style={{ marginRight: '0.2em' }}
+          style={{ marginRight: "0.2em" }}
           onClick={() => updateCandidate(rowData, "view")}
         />
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-info"
-          style={{ marginRight: '0.2em' }}
+          style={{ marginRight: "0.2em" }}
           //severity="danger"
           // outlined severity="danger"
           onClick={() => {
@@ -144,7 +158,7 @@ Liste des candidats
         <Button
           icon="pi pi-trash"
           className="p-button-rounded p-button-warning"
-          style={{ marginRight: '0.2em' }}
+          style={{ marginRight: "0.2em" }}
           severity="danger"
           onClick={() => onClickDeleteCandidate(rowData)}
         />
@@ -241,23 +255,27 @@ Liste des candidats
         <TableContainer>
           <DataTable
             value={candidates}
-            paginator
+            showGridlines
             stripedRows
+            paginator
             rows={10}
             header={header}
             loading={loading}
             filters={filters}
+            scrollable
+            scrollHeight="600px"
             filterDisplay="row"
             globalFilterFields={[
               "ID",
               "name",
+              "firstname",
               "partyEntity",
               "compaingLocation",
               "dateBirth",
               "cin",
               "birthLocation",
             ]}
-            dataKey=" id"
+            dataKey="id"
             stateStorage="session"
             stateKey="dt-state-demo-session"
             emptyMessage="Aucun  candidat trouvé."
@@ -287,6 +305,30 @@ Liste des candidats
               filterPlaceholder="Search by name"
             ></Column>
             <Column
+              key="firstname"
+              field="firstname"
+              header="Prénom"
+              sortable
+              body={(rowData) => cellTemplate(rowData, "firstname")}
+              filterPlaceholder="Search by name"
+            ></Column>
+            <Column
+              key="dateBirth"
+              field="dateBirth"
+              header="Date de naissance"
+              sortable
+              body={(rowData) => cellTemplate(rowData, "dateBirth")}
+              filterPlaceholder="Search by name"
+            ></Column>
+            <Column
+              key="cin"
+              field="cin"
+              header="CIN"
+              sortable
+              body={(rowData) => cellTemplate(rowData, "cin")}
+              filterPlaceholder="Search by cin"
+            ></Column>
+            <Column
               key="partyEntity"
               field="partyEntity"
               header="Parti politique"
@@ -302,29 +344,16 @@ Liste des candidats
               body={(rowData) => cellTemplate(rowData, "compaingLocation")}
               filterPlaceholder="Search by compaingLocation"
             ></Column>
-            <Column
-              key="dateBirth"
-              field="dateBirth"
-              header="Date de naissance"
-              sortable
-              filterPlaceholder="Search by name"
-            ></Column>
-            <Column
-              key="cin"
-              field="cin"
-              header="CIN"
-              sortable
-              body={(rowData) => cellTemplate(rowData, "cin")}
-              filterPlaceholder="Search by cin"
-            ></Column>
-            <Column
+
+          
+            {/* <Column
               key="birthLocation"
               field="birthLocation"
               header="Lieu de naissance"
               sortable
               body={(rowData) => cellTemplate(rowData, "birthLocation")}
               filterPlaceholder="Search by birthLocation"
-            ></Column>
+            ></Column> */}
             <Column
               key="action"
               header="Action"
