@@ -199,7 +199,7 @@ const TableVoters = () => {
           <DialogTitle id="alert-dialog-title">{"Suppression"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Voulez-vous confirmer la suppression ?
+              Voulez-vous confirmer la suppression de cet électeur?
             </DialogContentText>
           </DialogContent>
           <DialogActions>

@@ -78,7 +78,7 @@ const VoterCreate = () => {
 
       VoterApplicatif.createVoter(voter, tokenUser)
         .then(() => {
-          toast.success("Candidat ajouté avec succès", {
+          toast.success("Electeur ajouté avec succès", {
             position: "top-right",
           });
           setTimeout(() => {
