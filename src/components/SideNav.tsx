@@ -33,7 +33,7 @@ function SideNav() {
       //ml: 2,
       cursor: "pointer",
       transition: "width 0.3s ease-in-out",
-      marginLeft: collapsed ? "20px" : 0, // Ajoute une marge à gauche si collapsed
+      marginLeft: collapsed ? 2 : 3, // Ajoute une marge à gauche si collapsed
       marginRight: collapsed ? "auto" : 0, // Centre l'icône si collapsed
     },
   };
@@ -116,22 +116,23 @@ function SideNav() {
               height: "auto", // Maintient le ratio d'aspect
               display: "block",
               //margin: '20px auto 0',
-              marginLeft: 3,
+              //marginLeft: 3,
             }}
             src="https://storage.googleapis.com/evote-bucket-blockchain2/assets/Logo4-removebg.png"
           />
-          <Typography
-            variant="h6"
-            sx={{
-              marginLeft: 2,
-              fontSize: "30px",
-              fontWeight: "bold",
-              //fontFamily: "Times New Roman, serif",
-              
-            }}
-          >
-            Evoting
-          </Typography>
+         {!collapsed && (
+<Typography
+variant="h6"
+sx={{
+marginLeft: 2,
+fontSize: '30px',
+fontWeight: 'bold',
+//fontFamily: 'Times New Roman, serif',
+}}
+>
+Evoting
+</Typography>
+)}
         </Box>
 
         <MenuItem
