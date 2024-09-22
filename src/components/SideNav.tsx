@@ -102,7 +102,8 @@ function SideNav() {
             //src="/src/assets/Logo_vote-svg.png"
             //src="/src/assets/logo-removebg2.png"
              //src="/src/assets/testlogo.png" logo3-removebg
-             src="/src/assets/logo3-removebg.png" 
+             //src="/src/assets/logo3-removebg.png" 
+             src="https://storage.googleapis.com/evote-bucket-blockchain2/assets/logo3-removebg.png"
             //src="https://storage.cloud.google.com/evote-bucket-blockchain/assets/logo-removebg2.png"
           />
       
