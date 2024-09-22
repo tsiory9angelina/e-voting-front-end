@@ -26,17 +26,17 @@ function SideNav() {
     // },
     appLogo: {
       borderRadius: 2,
-        width: '100%',
-        maxWidth: collapsed ? 50 : 250, 
-        height: 'auto',
+      width: "100%",
+      maxWidth: collapsed ? 50 : 250,
+      height: "auto",
       //width: collapsed ? 50 : 170, // Largeur ajustée en fonction de l'état collapsed
       //ml: 2,
       cursor: "pointer",
-      transition: "width 0.3s ease-in-out", 
-        marginLeft: collapsed ? '20px' : 0, // Ajoute une marge à gauche si collapsed
-        marginRight: collapsed ? 'auto' : 0, // Centre l'icône si collapsed
-      },
-    }
+      transition: "width 0.3s ease-in-out",
+      marginLeft: collapsed ? "20px" : 0, // Ajoute une marge à gauche si collapsed
+      marginRight: collapsed ? "auto" : 0, // Centre l'icône si collapsed
+    },
+  };
 
   //================================================================
 
@@ -48,7 +48,8 @@ function SideNav() {
         top: "auto",
         boxShadow: "1px 1px 0px 1px rgba(0, 0, 0, 0.25)",
         //background: "green",
-        background: "linear-gradient(98deg, rgba(95, 230, 164, 1) , rgba(158, 158, 158, 1) 94%)",
+        background:
+          "linear-gradient(98deg, rgba(95, 230, 164, 1) , rgba(158, 158, 158, 1) 94%)",
         //background: "linear-gradient(98deg, rgba(158, 158, 158, 1) 50%, rgba(95, 230, 164, 1) 100%)",
         //background: "linear-gradient(98deg, rgba(112, 192, 119, 1) 20%, rgba(101, 176, 105, 1) 50%, rgba(147, 198, 147, 1) 100%)",
         color: "#1e4620",
@@ -69,8 +70,8 @@ function SideNav() {
                 : undefined,
               backgroundImage: active
                 ? "linear-gradient(98deg, #57B77C, #0a713f 94%)"
-                //? "linear-gradient(98deg, #89B77C, #0a713f 94%)"
-                : undefined,
+                : //? "linear-gradient(98deg, #89B77C, #0a713f 94%)"
+                  undefined,
               backgroundColor: active
                 ? theme.palette.secondary.dark
                 : undefined,
@@ -87,8 +88,7 @@ function SideNav() {
           },
         }}
       >
-        
-          <Box
+        {/* <Box
             component="img"
           sx={styles.appLogo}
 //             sx={{
@@ -105,8 +105,35 @@ function SideNav() {
              //src="/src/assets/logo3-removebg.png" 
              src="https://storage.googleapis.com/evote-bucket-blockchain2/assets/logo3-removebg.png"
             //src="https://storage.cloud.google.com/evote-bucket-blockchain/assets/logo-removebg2.png"
+          /> */}
+
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            component="img"
+            sx={{
+              ...styles.appLogo,
+              width: "50px", // Ajustez cette valeur selon vos besoins
+              height: "auto", // Maintient le ratio d'aspect
+              display: "block",
+              //margin: '20px auto 0',
+              marginLeft: 3,
+            }}
+            src="https://storage.googleapis.com/evote-bucket-blockchain2/assets/Logo4-removebg.png"
           />
-      
+          <Typography
+            variant="h6"
+            sx={{
+              marginLeft: 2,
+              fontSize: "30px",
+              fontWeight: "bold",
+              //fontFamily: "Times New Roman, serif",
+              
+            }}
+          >
+            Evoting
+          </Typography>
+        </Box>
+
         <MenuItem
           active={location.pathname === "/dashboard"}
           component={<Link to="/dashboard" />}
@@ -138,7 +165,7 @@ function SideNav() {
         <MenuItem
           active={
             location.pathname === "/dashboard/station" ||
-            location.pathname === "/dashboard/station/create"||
+            location.pathname === "/dashboard/station/create" ||
             location.pathname.startsWith("/dashboard/station/update/")
           }
           component={<Link to="/dashboard/station" />}
@@ -149,7 +176,7 @@ function SideNav() {
         <MenuItem
           active={
             location.pathname === "/dashboard/voter" ||
-            location.pathname === "/dashboard/voter/create"||
+            location.pathname === "/dashboard/voter/create" ||
             location.pathname.startsWith("/dashboard/voter/update/")
           }
           component={<Link to="/dashboard/voter" />}
@@ -160,8 +187,6 @@ function SideNav() {
       </Menu>
     </Sidebar>
   );
-  
 }
-
 
 export default SideNav;
