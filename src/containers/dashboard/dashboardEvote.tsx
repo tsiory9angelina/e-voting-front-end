@@ -1,42 +1,49 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 
-
 const DashboardEVote = () => {
-  
-
-    useEffect(()=>{
-      console.log("useEffect initial")
-      console.log(localStorage.getItem('token'))
-      console.log(localStorage.getItem('user'))
-      console.log("-------------------localStorage")
-    })
-
+  useEffect(() => {
+    console.log("useEffect initial");
+    console.log(localStorage.getItem("token"));
+    console.log(localStorage.getItem("user"));
+    console.log("-------------------localStorage");
+  }, []);
 
   return (
     <>
-      <Box>
-        <Typography sx={styles.pageTitle} variant='h5'>
+      <Box sx={styles.container}>
+        {/* <Typography sx={styles.pageTitle} variant="h5">
           EVote Dashboard
-        </Typography>
-        <Box sx={styles.columnContainer}>
-     
+        </Typography> */}
+        <Box sx={styles.iframeContainer}>
+          <iframe
+            src="https://dashboard-evoting.web.app/"
+            style={styles.iframe}
+            title="EVote Dashboard"
+          />
         </Box>
       </Box>
     </>
   );
 };
 
-
-/** @type {import("@mui/material").SxProps} */
 const styles = {
+  container: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+  },
   pageTitle: {
     mb: 2,
   },
-  columnContainer :{
-    columns : '280px 3',
-    maxWidth : 1400
-  }
+  iframeContainer: {
+    flex: 1,
+    display: "flex",
+  },
+  iframe: {
+    flex: 1,
+    border: "none",
+  },
 };
 
 export default DashboardEVote;

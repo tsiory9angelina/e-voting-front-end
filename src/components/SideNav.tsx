@@ -26,10 +26,15 @@ function SideNav() {
     // },
     appLogo: {
       borderRadius: 2,
-      width: collapsed ? 50 : 170, // Largeur ajustée en fonction de l'état collapsed
-      ml: 2,
+        width: '100%',
+        maxWidth: collapsed ? 50 : 250, 
+        height: 'auto',
+      //width: collapsed ? 50 : 170, // Largeur ajustée en fonction de l'état collapsed
+      //ml: 2,
       cursor: "pointer",
       transition: "width 0.3s ease-in-out", 
+        marginLeft: collapsed ? '20px' : 0, // Ajoute une marge à gauche si collapsed
+        marginRight: collapsed ? 'auto' : 0, // Centre l'icône si collapsed
       },
     }
 
@@ -85,9 +90,20 @@ function SideNav() {
         
           <Box
             component="img"
-            sx={styles.appLogo}
+          sx={styles.appLogo}
+//             sx={{
+//               ...styles.appLogo,
+//               width: '100px', // Ajustez cette valeur selon vos besoins
+//               height: 'auto' , // Maintient le ratio d'aspect
+//               display: 'block',
+// //margin: '0 auto'
+// margin: '20px auto 0'
+//               }}
+            //src="/src/assets/Logo_vote-svg.png"
             //src="/src/assets/logo-removebg2.png"
-            src="https://storage.cloud.google.com/evote-bucket-blockchain/assets/logo-removebg2.png"
+             //src="/src/assets/testlogo.png" logo3-removebg
+             src="/src/assets/logo3-removebg.png" 
+            //src="https://storage.cloud.google.com/evote-bucket-blockchain/assets/logo-removebg2.png"
           />
       
         <MenuItem
