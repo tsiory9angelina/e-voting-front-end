@@ -2,7 +2,6 @@ import {
   AppBar,
   Avatar,
   Box,
-  Divider,
   IconButton,
   ListItemIcon,
   Toolbar,
@@ -13,7 +12,7 @@ import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 // import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import { useProSidebar } from "react-pro-sidebar";
 import { useState } from "react";
-import { PersonAdd, Settings, Logout } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
@@ -82,7 +81,7 @@ function AppHeader() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        {/* <MenuItem onClick={handleClose}>
           <Avatar /> Profile
         </MenuItem>
         <MenuItem onClick={handleClose}>
@@ -100,7 +99,7 @@ function AppHeader() {
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
