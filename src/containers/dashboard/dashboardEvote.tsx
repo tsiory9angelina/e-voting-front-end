@@ -31,7 +31,7 @@ const styles = {
   container: {
     height: "100vh",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column"
   },
   pageTitle: {
     mb: 2,
